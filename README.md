@@ -1,7 +1,7 @@
 This repository is almost entirely a clone of Smogon's damage calculator (https://github.com/smogon/damage-calc), with modified javascript, css and html files to fit my friend (Lamp's) own EIPP game.
 
 I left the license in just in case, but i don't really understand what anything other than the above mentioned file types do. 
-Huge thanks to Celestia (celestia74), who developed the Infinite Fusion calculator, for giving me directions on how to host the modified calculator here on github (first time using it) and giving me the rundown of the file structures and such
+Huge thanks to Celestia (celestia74) for giving me directions on how to host the modified calculator here on github (first time using it) and giving me the rundown of the file structures and such
 
 You can use this calculator at file:///C:/Users/rodri/Desktop/dist/index.template.html 
 
