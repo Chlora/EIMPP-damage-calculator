@@ -147,6 +147,12 @@ html, body {
     max-width: 1285px;
     margin: 0px auto;
 }
+.modCredits{
+    clear: both;
+    padding: 20px;
+    max-width: 1285px;
+    margin: 0px auto;
+}
 div.wrapper > div > span {
     padding-right: 5px;
 }
@@ -167,13 +173,17 @@ th {
 }
 .title-text {
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 3em;
     margin: 0.5em 1em 0.5em 0;
     position: relative;
     top: -5px;
 }
+.levelInput{
+    display: none;
+}
 .main-title-text {
-    top: -10px;
+    top: 0px;
+    left: 28.5%;
 }
 .big-text {
     text-align: left;
@@ -210,6 +220,9 @@ th {
 .small-text {
     font-size: 0.8em;
 }
+.modHide{
+    display:none;
+}
 .panel {
     float: left;
     display: inline-block; /* required for honkaculate to work */
@@ -228,7 +241,6 @@ th {
 #holder-2 tr {
     white-space: nowrap;
 }
-
 /* general button styling */
 .btn {
     text-align: center;
@@ -296,6 +308,11 @@ th {
 }
 
 /* Hide element visually, but not from screen readers. See http://adrianroselli.com/2017/05/under-engineered-custom-radio-buttons-and-checkboxen.html */
+
+.doublesButton{
+    display: none;
+}
+
 .visually-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;
@@ -324,6 +341,7 @@ th {
 
 .genSelection, .notationSelection, .modeSelection {
     display: inline-block;
+    display: none;
     position: relative;
     top: -8px;
 }
@@ -431,6 +449,9 @@ select.toxic-counter {
 table.field {
     width: 100%;
 }
+.levelsSelect{
+    display: none;
+}
 
 [hidden], .hide {
     display: none;
@@ -523,4 +544,8 @@ table.field {
 .extraSetItems,
 .extraSetMoves {
     width: 100%;
+}
+
+.header{
+    display: none;
 }
