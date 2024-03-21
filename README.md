@@ -7,7 +7,7 @@ You can use this calculator at  https://chlora.github.io/EIMPP-damage-calculator
 
 
 
-Despite the fact that i had a good amount of knowledge on CSS, HTML and JS, it's VERY easy to make your own modification of the calculator, since what is already written is easy to understand and replicate through examples of the already written code. 
+Despite the fact that i had a good amount of knowledge on CSS, HTML and was able to mostly freestyle the JS, it's VERY easy to make your own modification of the calculator, since what is already written is easy to understand and replicate through examples of the already written code. 
 If you're looking to host one for your own project, don't be scared! It's much easier than it seems. You can find the full instructions in the damage calculator repository (linked above).
 
 
