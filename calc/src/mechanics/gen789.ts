@@ -1754,6 +1754,9 @@ function calculateBaseDamageSMSSSV(
       else{
         desc.weather = field.weather;
       }
+    } else if(attacker.hasType('Steel') && move.hasType('Steel') && field.hasT2Weather('Acid Downpour')){
+      baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
+      desc.t2weather = field.t2weather;
     }
   }
 
