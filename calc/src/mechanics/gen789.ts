@@ -1389,7 +1389,12 @@ export function calculateAtModsSMSSSV(
     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     move.category === 'Special') {
     atMods.push(6144);
-    desc.weather = field.weather;
+    if(field.hasT2Weather('Harsh Sunshine')){
+      desc.t2weather = field.t2weather;
+    }
+    else{
+      desc.weather = field.weather;
+    }
     desc.isFlowerGiftAttacker = true;
   } else if (
     (attacker.hasAbility('Guts') && attacker.status && move.category === 'Physical') ||
@@ -1582,14 +1587,24 @@ export function calculateDfModsSMSSSV(
     !hitsPhysical
   ) {
     dfMods.push(6144);
-    desc.defenderAbility = defender.ability;
+    if(field.hasT2Weather('Harsh Sunshine')){
+      desc.t2weather = field.t2weather;
+    }
+    else{
+      desc.weather = field.weather;
+    }
     desc.weather = field.weather;
   } else if (
     field.defenderSide.isFlowerGift &&
     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     !hitsPhysical) {
     dfMods.push(6144);
-    desc.weather = field.weather;
+    if(field.hasT2Weather('Harsh Sunshine')){
+      desc.t2weather = field.t2weather;
+    }
+    else{
+      desc.weather = field.weather;
+    }
     desc.isFlowerGiftDefender = true;
   } else if (
     defender.hasAbility('Grass Pelt') &&
@@ -1679,13 +1694,23 @@ function calculateBaseDamageSMSSSV(
     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) && move.named('Hydro Steam') && !attacker.hasItem('Utility Umbrella')
   ) {
     baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
-    desc.weather = field.weather;
+    if(field.hasT2Weather('Harsh Sunshine')){
+      desc.t2weather = field.t2weather;
+    }
+    else{
+      desc.weather = field.weather;
+    }
   } else if (!defender.hasItem('Utility Umbrella')) {
     if 
     (field.hasT2Weather('Harsh Sunshine') && field.hasWeather('Sun') && move.hasType('Fire')||
      field.hasT2Weather('Heavy Rain') && field.hasWeather('Rain') && move.hasType('Water')){
       baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
-      desc.weather = field.weather;
+      if(field.hasT2Weather('Harsh Sunshine') || field.hasT2Weather('Heavy Rain')){
+        desc.t2weather = field.t2weather;
+      }
+      else{
+        desc.weather = field.weather;
+      }
     } else if (
       (field.hasWeather('Sun'/*, 'Harsh Sunshine'*/) && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire')) ||
       (field.hasWeather('Rain'/*, 'Heavy Rain'*/) && !field.hasT2Weather('Heavy Rain') && move.hasType('Water'))
@@ -1723,7 +1748,12 @@ function calculateBaseDamageSMSSSV(
     ){
       //0.9x
       baseDamage = pokeRound(OF32(baseDamage * 3686) / 4096);
-      desc.weather = field.weather;
+      if(field.hasT2Weather('Harsh Sunshine') || field.hasT2Weather('Heavy Rain')){
+        desc.t2weather = field.t2weather;
+      }
+      else{
+        desc.weather = field.weather;
+      }
     }
   }
 
