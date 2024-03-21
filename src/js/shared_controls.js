@@ -284,6 +284,7 @@ $(".ability").bind("keyup change", function () {
 
 function autosetQP(pokemon) {
 	var currentWeather = $("input:radio[name='weather']:checked").val();
+	var currentT2Weather = $("input:radio[name='t2weather']:checked").val();
 	var currentTerrain = $("input:checkbox[name='terrain']:checked").val() || "No terrain";
 
 	var item = pokemon.find(".item").val();
@@ -305,11 +306,19 @@ function autosetQP(pokemon) {
 
 $("#p1 .ability").bind("keyup change", function () {
 	autosetWeather($(this).val(), 0);
+	t2WeatherWorkings($(this).val(), 0);
 	autosetTerrain($(this).val(), 0);
 	autosetQP($(this).closest(".poke-info"));
 });
 
 $("input[name='weather']").change(function () {
+	var allPokemon = $('.poke-info');
+	allPokemon.each(function () {
+		autosetQP($(this));
+	});
+});
+
+$("input[name='t2weather']").change(function () {
 	var allPokemon = $('.poke-info');
 	allPokemon.each(function () {
 		autosetQP($(this));
@@ -347,22 +356,39 @@ function autosetWeather(ability, i) {
 			$("#hail").prop("checked", true);
 		}
 		break;
-	case "Desolate Land":
-		lastAutoWeather[i] = "Harsh Sunshine";
-		$("#harsh-sunshine").prop("checked", true);
-		break;
-	case "Primordial Sea":
-		lastAutoWeather[i] = "Heavy Rain";
-		$("#heavy-rain").prop("checked", true);
-		break;
-	case "Delta Stream":
-		lastAutoWeather[i] = "Strong Winds";
-		$("#strong-winds").prop("checked", true);
-		break;
 	default:
 		lastAutoWeather[i] = "";
 		var newWeather = lastAutoWeather[1 - i] !== "" ? lastAutoWeather[1 - i] : "";
 		$("input:radio[name='weather'][value='" + newWeather + "']").prop("checked", true);
+		break;
+	}
+}
+
+var lastManualT2Weather = "T2clear";
+var lastAutoT2Weather = ["", ""];
+function t2WeatherWorkings(ability, i){
+	var currentT2Weather = $("input:radio[name='t2weather']:checked").val();
+	if (lastAutoT2Weather.indexOf(currentT2Weather) === -1) {
+		lastManualT2Weather = currentT2Weather;
+		lastAutoT2Weather[1 - i] = "";
+	}
+	switch(ability){
+	case "Desolate Land":
+		lastAutoT2Weather[i] = "Harsh Sunshine";
+		$("#harsh-sunshine").prop("checked", true);
+		break;
+	case "Primordial Sea":
+		lastAutoT2Weather[i] = "Heavy Rain";
+		$("#heavy-rain").prop("checked", true);
+		break;
+	case "Delta Stream":
+		lastAutoT2Weather[i] = "Strong Winds";
+		$("#strong-winds").prop("checked", true);
+		break;
+	default:
+		lastAutoT2Weather[i] = "T2clear";
+		var newT2Weather = lastAutoT2Weather[1 - i] !== "T2clear" ? lastAutoT2Weather[1 - i] : "T2clear";
+		$("input:radio[name='t2weather'][value='" + newT2Weather + "']").prop("checked", true);
 		break;
 	}
 }
@@ -1068,12 +1094,14 @@ function createField() {
 	var isGravity = $("#gravity").prop("checked");
 	var isSR = [$("#srL").prop("checked"), $("#srR").prop("checked")];
 	var weather;
+	var t2weather;
 	var spikes;
 	if (gen === 2) {
 		spikes = [$("#gscSpikesL").prop("checked") ? 1 : 0, $("#gscSpikesR").prop("checked") ? 1 : 0];
 		weather = $("input:radio[name='gscWeather']:checked").val();
 	} else {
 		weather = $("input:radio[name='weather']:checked").val();
+		t2weather = $("input:radio[name='t2weather']:checked").val();
 		spikes = [~~$("input:radio[name='spikesL']:checked").val(), ~~$("input:radio[name='spikesR']:checked").val()];
 	}
 	var steelsurge = [$("#steelsurgeL").prop("checked"), $("#steelsurgeR").prop("checked")];
@@ -1108,7 +1136,7 @@ function createField() {
 		});
 	};
 	return new calc.Field({
-		gameType: gameType, weather: weather, terrain: terrain,
+		gameType: gameType, weather: weather, t2weather: t2weather, terrain: terrain,
 		isMagicRoom: isMagicRoom, isWonderRoom: isWonderRoom, isGravity: isGravity,
 		isBeadsOfRuin: isBeadsOfRuin, isTabletsOfRuin: isTabletsOfRuin,
 		isSwordOfRuin: isSwordOfRuin, isVesselOfRuin: isVesselOfRuin,
