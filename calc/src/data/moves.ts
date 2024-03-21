@@ -4945,7 +4945,14 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
   'Acid Rain': {
     bp: 0, 
     category: 'Status', 
-    type: 'Poison'
+    type: 'Poison',
+  },
+  'Elytron Blow':{
+    bp: 55,
+    type: 'Bug',
+    category: 'Physical',
+    isWind: true,
+    priority: 1,
   },
   'Nutsack Assault': {
     bp: 100,

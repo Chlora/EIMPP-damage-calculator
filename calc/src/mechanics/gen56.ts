@@ -97,8 +97,8 @@ export function calculateBWXY(
 
   if (move.named('Weather Ball')) {
     move.type =
-      field.hasWeather('Sun', 'Harsh Sunshine') ? 'Fire'
-      : field.hasWeather('Rain', 'Heavy Rain') ? 'Water'
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) ? 'Fire'
+      : (field.hasWeather('Rain') || field.hasT2Weather('Heavy Rain')) ? 'Water'
       : field.hasWeather('Sand') ? 'Rock'
       : field.hasWeather('Hail') ? 'Ice'
       : 'Normal';
@@ -207,14 +207,14 @@ export function calculateBWXY(
   }
 
   if (
-    (field.hasWeather('Harsh Sunshine') && move.hasType('Water')) ||
-    (field.hasWeather('Heavy Rain') && move.hasType('Fire'))
+    (field.hasT2Weather('Harsh Sunshine') && move.hasType('Water')) ||
+    (field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
   ) {
     desc.weather = field.weather;
     return result;
   }
 
-  if (field.hasWeather('Strong Winds') && defender.hasType('Flying') &&
+  if (field.hasT2Weather('Strong Winds') && defender.hasType('Flying') &&
       gen.types.get(toID(move.type))!.effectiveness['Flying']! > 1) {
     typeEffectiveness /= 2;
     desc.weather = field.weather;
@@ -342,7 +342,7 @@ export function calculateBWXY(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * (field.weather && !field.hasWeather('Strong Winds') ? 2 : 1);
+    basePower = move.bp * (field.weather && !field.hasT2Weather('Strong Winds') ? 2 : 1);
     desc.moveBP = basePower;
     break;
   case 'Fling':
@@ -497,7 +497,7 @@ export function calculateBWXY(
   } else if (gen.num > 5 && move.named('Knock Off') && !resistedKnockOffDamage) {
     bpMods.push(6144);
     desc.moveBP = basePower * 1.5;
-  } else if (move.named('Solar Beam') && field.hasWeather('Rain', 'Heavy Rain', 'Sand', 'Hail')) {
+  } else if (move.named('Solar Beam') && (field.hasT2Weather('Heavy Rain') || field.hasWeather('Rain', 'Sand', 'Hail'))) {
     bpMods.push(2048);
     desc.moveBP = basePower / 2;
     desc.weather = field.weather;
@@ -613,11 +613,11 @@ export function calculateBWXY(
     desc.attackerAbility = 'Flash Fire';
   } else if (
     (attacker.hasAbility('Solar Power') &&
-     field.hasWeather('Sun', 'Harsh Sunshine') &&
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
      move.category === 'Special') ||
     (attacker.named('Cherrim') &&
      attacker.hasAbility('Flower Gift') &&
-     field.hasWeather('Sun', 'Harsh Sunshine') &&
+     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
      move.category === 'Physical')
   ) {
     atMods.push(6144);
@@ -625,7 +625,7 @@ export function calculateBWXY(
     desc.weather = field.weather;
   } else if (
     field.attackerSide.isFlowerGift &&
-    field.hasWeather('Sun', 'Harsh Sunshine') &&
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     move.category === 'Physical') {
     atMods.push(6144);
     desc.weather = field.weather;
@@ -696,7 +696,7 @@ export function calculateBWXY(
   } else if (
     defender.named('Cherrim') &&
     defender.hasAbility('Flower Gift') &&
-    field.hasWeather('Sun', 'Harsh Sunshine') &&
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     !hitsPhysical
   ) {
     dfMods.push(6144);
@@ -704,7 +704,7 @@ export function calculateBWXY(
     desc.weather = field.weather;
   } else if (
     field.defenderSide.isFlowerGift &&
-    field.hasWeather('Sun', 'Harsh Sunshine') &&
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     !hitsPhysical) {
     dfMods.push(6144);
     desc.weather = field.weather;
@@ -933,8 +933,8 @@ function calculateBaseDamageBWXY(
     baseDamage = pokeRound(OF32(baseDamage * 2048) / 4096);
   }
 
-  if ((field.hasWeather('Sun', 'Harsh Sunshine') && move.hasType('Fire')) ||
-      (field.hasWeather('Rain', 'Heavy Rain') && move.hasType('Water'))) {
+  if (((field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) && move.hasType('Fire')) ||
+      ((field.hasWeather('Rain') || field.hasT2Weather('Heavy Rain')) && move.hasType('Water'))) {
     baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
     desc.weather = field.weather;
   } else if (

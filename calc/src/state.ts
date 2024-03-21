@@ -40,6 +40,7 @@ export namespace State {
   export interface Field {
     gameType: I.GameType;
     weather?: I.Weather;
+    t2weather?: I.T2Weather;
     terrain?: I.Terrain;
     isMagicRoom?: boolean;
     isWonderRoom?: boolean;

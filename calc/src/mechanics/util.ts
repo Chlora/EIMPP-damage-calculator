@@ -6,6 +6,7 @@ import {
   NatureName,
   StatID,
   StatsTable,
+  T2Weather,
   Terrain,
   TypeName,
   Weather,
@@ -91,6 +92,7 @@ export function computeFinalStats(
 
 export function getFinalSpeed(gen: Generation, pokemon: Pokemon, field: Field, side: Side) {
   const weather = field.weather || '';
+  const t2weather = field.t2weather || '';
   const terrain = field.terrain;
   let speed = getModifiedStat(pokemon.rawStats.spe, pokemon.boosts.spe, gen);
   const speedMods = [];
@@ -100,10 +102,10 @@ export function getFinalSpeed(gen: Generation, pokemon: Pokemon, field: Field, s
   // speedMods.push(1024);
 
   if ((pokemon.hasAbility('Unburden') && pokemon.abilityOn) ||
-      (pokemon.hasAbility('Chlorophyll') && weather.includes('Sun')) ||
-      (pokemon.hasAbility('Sand Rush') && weather === 'Sand') ||
-      (pokemon.hasAbility('Swift Swim') && weather.includes('Rain')) ||
-      (pokemon.hasAbility('Slush Rush') && ['Hail', 'Snow'].includes(weather)) ||
+      (pokemon.hasAbility('Chlorophyll') && (weather.includes('Sun') || t2weather.includes('Harsh Sunshine'))) ||
+      (pokemon.hasAbility('Sand Rush') && ((weather === 'Sand') || t2weather === 'Heavy Sandstorm')) ||
+      (pokemon.hasAbility('Swift Swim') && (weather.includes('Rain') || t2weather.includes('Heavy Rain'))) ||
+      (pokemon.hasAbility('Slush Rush') && (['Hail', 'Snow'].includes(weather) || t2weather.includes('Permafrost'))) ||
       (pokemon.hasAbility('Surge Surfer') && terrain === 'Electric')
   ) {
     speedMods.push(8192);
@@ -165,28 +167,60 @@ export function checkAirLock(pokemon: Pokemon, field: Field) {
 export function checkTeraformZero(pokemon: Pokemon, field: Field) {
   if (pokemon.hasAbility('Teraform Zero') && pokemon.abilityOn) {
     field.weather = undefined;
+    field.t2weather = undefined;
     field.terrain = undefined;
   }
 }
 
-export function checkForecast(pokemon: Pokemon, weather?: Weather) {
+export function checkForecast(pokemon: Pokemon, weather?: Weather, t2weather?: T2Weather) {
   if (pokemon.hasAbility('Forecast') && pokemon.named('Castform')) {
-    switch (weather) {
-    case 'Sun':
+    switch(t2weather){
+      case 'Acid Downpour':
+        pokemon.types = ['Poison'];
+        break;
+    case 'Heavy Rain':
+      pokemon.types = ['Water'];
+      break;
+
     case 'Harsh Sunshine':
       pokemon.types = ['Fire'];
       break;
+
+    case 'Heavy Sandstorm':
+      pokemon.types = ['Rock'];
+      break;
+
+    case 'Permafrost':
+      pokemon.types = ['Ice'];
+      break;
+    
+      case 'Strong Winds':
+        pokemon.types = ['Flying'];
+    }
+
+    switch (weather) {
+    case 'Sun':
+      pokemon.types = ['Fire'];
+      break;
     case 'Rain':
-    case 'Heavy Rain':
       pokemon.types = ['Water'];
       break;
     case 'Hail':
     case 'Snow':
       pokemon.types = ['Ice'];
       break;
+    case 'Acid Rain':
+      pokemon.types = ['Poison'];
+      break;
+    case 'Sand':
+      pokemon.types = ['Rock'];
+      break;
     default:
       pokemon.types = ['Normal'];
     }
+
+    
+
   }
 }
 
@@ -441,6 +475,7 @@ export function isQPActive(
   }
 
   const weather = field.weather || '';
+  const t2weather = field.t2weather || '';
   const terrain = field.terrain;
 
   return (

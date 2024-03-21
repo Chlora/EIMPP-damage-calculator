@@ -1,4 +1,4 @@
-import {Generation, Weather, Terrain, TypeName, ID} from './data/interface';
+import {Generation, Weather, Terrain, TypeName, ID, T2Weather} from './data/interface';
 import {Field, Side} from './field';
 import {Move} from './move';
 import {Pokemon} from './pokemon';
@@ -48,6 +48,7 @@ export interface RawDesc {
   rivalry?: 'buffed' | 'nerfed';
   terrain?: Terrain;
   weather?: Weather;
+  t2weather ?: T2Weather;
   isDefenderDynamaxed?: boolean;
 }
 
@@ -491,12 +492,12 @@ function getEndOfTurn(
   let damage = 0;
   const texts = [];
 
-  if (field.hasWeather('Sun', 'Harsh Sunshine')) {
+  if (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) {
     if (defender.hasAbility('Dry Skin', 'Solar Power')) {
       damage -= Math.floor(defender.maxHP() / 8);
       texts.push(defender.ability + ' damage');
     }
-  } else if (field.hasWeather('Rain', 'Heavy Rain')) {
+  } else if (field.hasWeather('Rain') || field.hasT2Weather('Heavy Rain')) {
     if (defender.hasAbility('Dry Skin')) {
       damage += Math.floor(defender.maxHP() / 8);
       texts.push('Dry Skin recovery');
@@ -929,13 +930,21 @@ function buildDescription(description: RawDesc, attacker: Pokemon, defender: Pok
     output += `Tera ${description.defenderTera} `;
   }
   output += description.defenderName;
-  if (description.weather && description.terrain) {
-    // do nothing
+  if (description.weather && description.terrain && description.t2weather) {
+    output += ' in ' + description.t2weather  + ', ' + description.weather + ' and ' + description.terrain + ' Terrain';
+  } else if (description.weather && description.terrain) {
+    output += ' in ' + description.weather + ' and ' + description.terrain + ' Terrain';
+  } else if(description.weather && description.t2weather){
+    output += ' in ' + description.t2weather + ' and ' + description.weather;
+  } else if(description.t2weather && description.terrain){
+    output += ' in ' + description.t2weather + ' and ' + description.terrain + ' Terrain';
+  } else if (description.t2weather) {
+    output += ' in ' + description.t2weather;
   } else if (description.weather) {
     output += ' in ' + description.weather;
   } else if (description.terrain) {
     output += ' in ' + description.terrain + ' Terrain';
-  }
+  } 
   if (description.isReflect) {
     output += ' through Reflect';
   } else if (description.isLightScreen) {

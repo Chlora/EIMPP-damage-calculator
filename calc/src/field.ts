@@ -1,9 +1,10 @@
 import {State} from './state';
-import {GameType, Weather, Terrain} from './data/interface';
+import {GameType, Weather, T2Weather, Terrain} from './data/interface';
 
 export class Field implements State.Field {
   gameType: GameType;
   weather?: Weather;
+  t2weather?: T2Weather;
   terrain?: Terrain;
   isMagicRoom: boolean;
   isWonderRoom: boolean;
@@ -22,6 +23,7 @@ export class Field implements State.Field {
     this.gameType = field.gameType || 'Singles';
     this.terrain = field.terrain;
     this.weather = field.weather;
+    this.t2weather = field.t2weather;
     this.isMagicRoom = !!field.isMagicRoom;
     this.isWonderRoom = !!field.isWonderRoom;
     this.isGravity = !!field.isGravity;
@@ -41,6 +43,10 @@ export class Field implements State.Field {
     return !!(this.weather && weathers.includes(this.weather));
   }
 
+  hasT2Weather(...t2weathers: T2Weather[]) {
+    return !!(this.t2weather && t2weathers.includes(this.t2weather));
+  }
+
   hasTerrain(...terrains: Terrain[]) {
     return !!(this.terrain && terrains.includes(this.terrain));
   }
@@ -54,6 +60,7 @@ export class Field implements State.Field {
     return new Field({
       gameType: this.gameType,
       weather: this.weather,
+      t2weather: this.t2weather,
       terrain: this.terrain,
       isMagicRoom: this.isMagicRoom,
       isWonderRoom: this.isWonderRoom,

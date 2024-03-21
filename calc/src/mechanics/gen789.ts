@@ -117,7 +117,8 @@ export function calculateSMSSSV(
     'Shadow Shield'
   );
 
-  const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze');
+  const attackerIgnoresAbility = (attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze')) || 
+  (!defender.hasType('Poison') && !defender.hasAbility('Liquid Ooze') && !defender.hasAbility('Poison Heal') && field.hasT2Weather('Acid Downpour'));
   const moveIgnoresAbility = move.named(
     'G-Max Drum Solo',
     'G-Max Fire Ball',
@@ -149,24 +150,35 @@ export function calculateSMSSSV(
   if (move.named('Weather Ball')) {
     const holdingUmbrella = attacker.hasItem('Utility Umbrella');
     type =
-      field.hasWeather('Sun', 'Harsh Sunshine') && !holdingUmbrella ? 'Fire'
-      : field.hasWeather('Rain', 'Heavy Rain') && !holdingUmbrella ? 'Water'
-      : field.hasWeather('Sand', 'Heavy Sandstorm') && !holdingUmbrella ? 'Rock'
-      : field.hasWeather('Hail', 'Snow', 'Permafrost') && !holdingUmbrella ? 'Ice'
-      : field.hasWeather('Acid Rain', 'Acid Downpour') && !holdingUmbrella ? 'Poison'
-      : field.hasWeather('Strong Winds') ? 'Flying'
+    //t2 comes first to always override t1 typing
+        field.hasT2Weather('Harsh Sunshine') && !holdingUmbrella ? 'Fire'
+      : field.hasT2Weather('Heavy Rain') && !holdingUmbrella ? 'Water'
+      : field.hasT2Weather('Heavy Sandstorm') && !holdingUmbrella ? 'Rock'
+      : field.hasT2Weather('Permafrost') && !holdingUmbrella ? 'Ice'
+      : field.hasT2Weather('Acid Downpour') && !holdingUmbrella ? 'Poison'
+      : field.hasT2Weather('Strong Winds') || field.attackerSide.isTailwind ? 'Flying'
+      : field.hasWeather('Sun') && !holdingUmbrella ? 'Fire'
+      : field.hasWeather('Rain') && !holdingUmbrella ? 'Water'
+      : field.hasWeather('Sand') && !holdingUmbrella ? 'Rock'
+      : field.hasWeather('Hail', 'Snow') && !holdingUmbrella ? 'Ice'
+      : field.hasWeather('Acid Rain') && !holdingUmbrella ? 'Poison'
       : 'Normal';
     desc.weather = field.weather;
     desc.moveType = type;
   } else if (move.named('Climatostrike')) {
     const holdingUmbrella = attacker.hasItem('Utility Umbrella');
     type =
-      field.hasWeather('Sun', 'Harsh Sunshine') && !holdingUmbrella ? 'Fire'
-      : field.hasWeather('Rain', 'Heavy Rain') && !holdingUmbrella ? 'Water'
-      : field.hasWeather('Sand', 'Heavy Sandstorm') && !holdingUmbrella ? 'Rock'
-      : field.hasWeather('Hail', 'Snow', 'Permafrost') && !holdingUmbrella ? 'Ice'
-      : field.hasWeather('Acid Rain', 'Acid Downpour') && !holdingUmbrella ? 'Poison'
-      : field.hasWeather('Strong Winds') ? 'Flying'
+        field.hasT2Weather('Harsh Sunshine') && !holdingUmbrella ? 'Fire'
+      : field.hasT2Weather('Heavy Rain') && !holdingUmbrella ? 'Water'
+      : field.hasT2Weather('Heavy Sandstorm') && !holdingUmbrella ? 'Rock'
+      : field.hasT2Weather('Permafrost') && !holdingUmbrella ? 'Ice'
+      : field.hasT2Weather('Acid Downpour') && !holdingUmbrella ? 'Poison'
+      : field.hasT2Weather('Strong Winds') || field.attackerSide.isTailwind ? 'Flying'
+      : field.hasWeather('Sun') && !holdingUmbrella ? 'Fire'
+      : field.hasWeather('Rain') && !holdingUmbrella ? 'Water'
+      : field.hasWeather('Sand') && !holdingUmbrella ? 'Rock'
+      : field.hasWeather('Hail', 'Snow') && !holdingUmbrella ? 'Ice'
+      : field.hasWeather('Acid Rain') && !holdingUmbrella ? 'Poison'
       : 'Normal';
     desc.weather = field.weather;
     desc.moveType = type;
@@ -306,6 +318,9 @@ export function calculateSMSSSV(
     )
     : 1;
   let typeEffectiveness = type1Effectiveness * type2Effectiveness;
+  if(typeEffectiveness == 4){
+    typeEffectiveness = 3;
+  }
 
   if (defender.teraType && defender.teraType !== 'Stellar') {
     typeEffectiveness = getMoveEffectiveness(
@@ -327,6 +342,29 @@ export function calculateSMSSSV(
     typeEffectiveness = 1;
   }
 
+  if(typeEffectiveness === 0 && isGrounded(defender, field) && field.hasTerrain('Spooky') && ((move.hasType('Normal') || move.hasType('Ghost')))) {
+    desc.terrain = field.terrain;
+    typeEffectiveness = 1;
+  }
+
+  if(typeEffectiveness === 0 && move.hasType('Poison')){
+    if(field.hasT2Weather('Acid Downpour')){
+      if(defender.types[0] == 'Steel'){
+        typeEffectiveness = 1 * type2Effectiveness;
+      } else {
+        typeEffectiveness = 1 * type1Effectiveness;
+      }
+      desc.t2weather = field.t2weather;
+    } else if (field.hasWeather('Acid Rain')){
+      if(defender.types[0] == 'Steel'){
+        typeEffectiveness = 0.5 * type2Effectiveness;
+      } else {
+        typeEffectiveness = 0.5 * type1Effectiveness;
+      }
+      desc.weather = field.weather;
+    }
+  }
+
   if (typeEffectiveness === 0) {
     return result;
   }
@@ -343,15 +381,15 @@ export function calculateSMSSSV(
     return result;
   }
 
-  if (
+  /*if (
     (field.hasWeather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
     (field.hasWeather('Heavy Rain') && move.hasType('Fire'))
   ) {
     desc.weather = field.weather;
     return result;
-  }
+  }*/
 
-  if (field.hasWeather('Strong Winds') && defender.hasType('Flying') &&
+  if (field.hasT2Weather('Strong Winds') && defender.hasType('Flying') &&
       gen.types.get(toID(move.type))!.effectiveness['Flying']! > 1) {
     typeEffectiveness /= 2;
     desc.weather = field.weather;
@@ -393,6 +431,11 @@ export function calculateSMSSSV(
   if (move.hasType('Ground') && !move.named('Thousand Arrows') &&
       !field.isGravity && defender.hasItem('Air Balloon')) {
     desc.defenderItem = defender.item;
+    return result;
+  }
+
+  if((move.hasType('Normal') || move.hasType('Ghost')) && field.hasTerrain('Spooky') && typeEffectiveness === 0 && isGrounded(defender, field)){
+    desc.terrain = field.terrain;
     return result;
   }
 
@@ -804,19 +847,21 @@ export function calculateBasePowerSMSSSV(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * (field.weather ? 2 : 1);
-    if (field.hasWeather('Sun', 'Harsh Sunshine', 'Rain', 'Heavy Rain', 'Hail', 'Snow', 'Permafrost', 'Acid Rain', 'Acid Downpour', 'Sand', 'Heavy Sandstorm', 'Strong Winds') &&
+    basePower = move.bp * ((field.weather || field.t2weather) ? 2 : 1);
+    if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
+        || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
     break;
   case 'Climatostrike':
-    basePower = move.bp * (field.weather ? 2 : 1);
-    if (field.hasWeather('Sun', 'Harsh Sunshine', 'Rain', 'Heavy Rain', 'Hail', 'Snow', 'Permafrost', 'Acid Rain', 'Acid Downpour', 'Sand', 'Heavy Sandstorm', 'Strong Winds') &&
+    basePower = move.bp * ((field.weather || field.t2weather) ? 2 : 1);
+    if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
+    || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
   break;
     case 'Barometric Crush':
-      basePower = move.bp * ((field.attackerSide.isTailwind || field.hasWeather('Strong Winds')) ? 1.3 : 1);
+      basePower = move.bp * ((field.attackerSide.isTailwind || field.hasT2Weather('Strong Winds')) ? 1.3 : 1);
       break;
   case 'Terrain Pulse':
     basePower = move.bp * (isGrounded(attacker, field) && field.terrain ? 2 : 1);
@@ -1032,7 +1077,7 @@ export function calculateBPModsSMSSSV(
     bpMods.push(6144);
     desc.moveBP = basePower * 1.5;
   } else if (move.named('Solar Beam', 'Solar Blade') &&
-      field.hasWeather('Rain', 'Heavy Rain', 'Sand', 'Heavy Sandstorm', 'Acid Rain', 'Acid Downpour', 'Hail', 'Snow', 'Permafrost')) {
+      (field.hasWeather('Rain',  'Sand',  'Acid Rain',  'Hail', 'Snow') || field.hasT2Weather('Heavy Rain', 'Heavy Sandstorm', 'Acid Downpour','Permafrost'))) {
     bpMods.push(2048);
     desc.moveBP = basePower / 2;
     desc.weather = field.weather;
@@ -1142,7 +1187,7 @@ export function calculateBPModsSMSSSV(
     (attacker.hasAbility('Sheer Force') &&
       (move.secondaries || move.named('Jet Punch', 'Order Up')) && !move.isMax) ||
     (attacker.hasAbility('Sand Force') &&
-      field.hasWeather('Sand', 'Heavy Sandstorm') && move.hasType('Rock', 'Ground', 'Steel')) ||
+      (field.hasWeather('Sand') || field.hasT2Weather('Heavy Sandstorm')) && move.hasType('Rock', 'Ground', 'Steel')) ||
     (attacker.hasAbility('Analytic') &&
       (turnOrder !== 'first' || field.defenderSide.isSwitching === 'out')) ||
     (attacker.hasAbility('Tough Claws') && move.flags.contact) ||
@@ -1314,15 +1359,16 @@ export function calculateAtModsSMSSSV(
     desc.attackerAbility = attacker.ability;
   } else if (
     (attacker.hasAbility('Solar Power') &&
-     field.hasWeather('Sun', 'Harsh Sunshine') &&
+     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
      move.category === 'Special') ||
     (attacker.named('Cherrim') &&
      attacker.hasAbility('Flower Gift') &&
-     field.hasWeather('Sun', 'Harsh Sunshine') &&
+     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
      move.category === 'Special')) {
     atMods.push(6144);
     desc.attackerAbility = attacker.ability;
     desc.weather = field.weather;
+    //TODO rearrange desc
   } 
   //EIMPP: Give castform a 1.1x boost on STAB
   else if(attacker.hasAbility('Forecast') && attacker.hasType(move.type)){
@@ -1336,8 +1382,8 @@ export function calculateAtModsSMSSSV(
     desc.attackerAbility = attacker.ability;
   } else if (
     field.attackerSide.isFlowerGift &&
-    field.hasWeather('Sun', 'Harsh Sunshine') &&
-    move.category === 'Physical') {
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
+    move.category === 'Special') {
     atMods.push(6144);
     desc.weather = field.weather;
     desc.isFlowerGiftAttacker = true;
@@ -1418,7 +1464,7 @@ export function calculateAtModsSMSSSV(
     (attacker.hasAbility('Hadron Engine') && move.category === 'Special' &&
       field.hasTerrain('Electric') && isGrounded(attacker, field)) ||
     (attacker.hasAbility('Orichalcum Pulse') && move.category === 'Physical' &&
-      field.hasWeather('Sun', 'Harsh Sunshine') && !attacker.hasItem('Utility Umbrella'))
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) && !attacker.hasItem('Utility Umbrella'))
   ) {
     atMods.push(5461);
     desc.attackerAbility = attacker.ability;
@@ -1472,14 +1518,30 @@ export function calculateDefenseSMSSSV(
   }
 
   // unlike all other defense modifiers, Sandstorm SpD boost gets applied directly
-  if (field.hasWeather('Sand', 'Heavy Sandstorm') && defender.hasType('Rock') && !hitsPhysical) {
+  if (field.hasWeather('Sand') && field.hasT2Weather('Heavy Sandstorm') && defender.hasType('Rock') && !hitsPhysical) {
     defense = pokeRound((defense * 3) / 2);
     desc.weather = field.weather;
-  }
-  if (field.hasWeather('Snow') && defender.hasType('Ice') && hitsPhysical) {
-    defense = pokeRound((defense * 3) / 2);
+    desc.t2weather = field.t2weather;
+  } else if (!field.hasWeather('Sand') && field.hasT2Weather('Heavy Sandstorm') && defender.hasType('Rock') && !hitsPhysical) {
+    defense = pokeRound((defense * 13) / 10);
+    desc.t2weather = field.t2weather;
+  } else if (field.hasWeather('Sand') && !field.hasT2Weather('Heavy Sandstorm') && defender.hasType('Rock') && !hitsPhysical) {
+    defense = pokeRound((defense * 12) / 10);
     desc.weather = field.weather;
   }
+  if (field.hasWeather('Snow') && field.hasT2Weather('Permafrost') && defender.hasType('Ice') && hitsPhysical) {
+    defense = pokeRound((defense * 3) / 2);
+    desc.weather = field.weather;
+    desc.t2weather = field.t2weather;
+  } else if (field.hasWeather('Snow') && !field.hasT2Weather('Permafrost') && defender.hasType('Ice') && hitsPhysical){
+    defense = pokeRound((defense * 12) / 10);
+    desc.weather = field.weather;
+  }
+  else if (!field.hasWeather('Snow') && field.hasT2Weather('Permafrost') && defender.hasType('Ice') && hitsPhysical){
+    defense = pokeRound((defense * 13) / 10);
+    desc.t2weather = field.t2weather;
+  }
+
 
   const dfMods = calculateDfModsSMSSSV(
     gen,
@@ -1512,7 +1574,7 @@ export function calculateDfModsSMSSSV(
   } else if (
     defender.named('Cherrim') &&
     defender.hasAbility('Flower Gift') &&
-    field.hasWeather('Sun', 'Harsh Sunshine') &&
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     !hitsPhysical
   ) {
     dfMods.push(6144);
@@ -1520,7 +1582,7 @@ export function calculateDfModsSMSSSV(
     desc.weather = field.weather;
   } else if (
     field.defenderSide.isFlowerGift &&
-    field.hasWeather('Sun', 'Harsh Sunshine') &&
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
     !hitsPhysical) {
     dfMods.push(6144);
     desc.weather = field.weather;
@@ -1601,23 +1663,62 @@ function calculateBaseDamageSMSSSV(
     baseDamage = pokeRound(OF32(baseDamage * 1024) / 4096);
   }
 
+  if(move.named('Elytron Blow')){
+    if(field.hasT2Weather('Strong Winds')){
+      baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
+      desc.t2weather = field.t2weather;
+    } else if(field.attackerSide.isTailwind){
+      baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
+    }
+  }
   if (
-    field.hasWeather('Sun') && move.named('Hydro Steam') && !attacker.hasItem('Utility Umbrella')
+    (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) && move.named('Hydro Steam') && !attacker.hasItem('Utility Umbrella')
   ) {
     baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
     desc.weather = field.weather;
   } else if (!defender.hasItem('Utility Umbrella')) {
-    if (
-      (field.hasWeather('Sun', 'Harsh Sunshine') && move.hasType('Fire')) ||
-      (field.hasWeather('Rain', 'Heavy Rain') && move.hasType('Water'))
-    ) {
+    if 
+    (field.hasT2Weather('Harsh Sunshine') && field.hasWeather('Sun') && move.hasType('Fire')||
+     field.hasT2Weather('Heavy Rain') && field.hasWeather('Rain') && move.hasType('Water')){
       baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
       desc.weather = field.weather;
     } else if (
-      (field.hasWeather('Sun') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
-      (field.hasWeather('Rain') && move.hasType('Fire'))
+      (field.hasWeather('Sun'/*, 'Harsh Sunshine'*/) && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire')) ||
+      (field.hasWeather('Rain'/*, 'Heavy Rain'*/) && !field.hasT2Weather('Heavy Rain') && move.hasType('Water'))
+    ) {
+      baseDamage = pokeRound(OF32(baseDamage * 4915) / 4096);
+      desc.weather = field.weather;
+    } else if ( 
+    field.hasT2Weather('Harsh Sunshine') && !field.hasWeather('Sun') && move.hasType('Fire')||
+     field.hasT2Weather('Heavy Rain') && !field.hasWeather('Rain') && move.hasType('Water')){
+      baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
+      desc.weather = field.weather;
+    } else if (
+      (field.hasWeather('Sun') && field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
+      (field.hasWeather('Rain') && field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 2048) / 4096);
+      desc.weather = field.weather;
+    } else if (
+      (field.hasWeather('Sun') && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
+      (field.hasWeather('Rain') && !field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
+    ) {
+      baseDamage = pokeRound(OF32(baseDamage * 3277) / 4096);
+      desc.weather = field.weather;
+    } 
+    else if (
+      (!field.hasWeather('Sun') && field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
+      (!field.hasWeather('Rain') && field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
+    ) {
+      baseDamage = pokeRound(OF32(baseDamage * 2867) / 4096);
+      desc.weather = field.weather;
+    }
+    else if(
+      field.hasWeather('Rain') && field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire') ||
+      field.hasWeather('Sun') && field.hasT2Weather('Heavy Rain') && move.hasType('Fire')
+    ){
+      //0.9x
+      baseDamage = pokeRound(OF32(baseDamage * 3686) / 4096);
       desc.weather = field.weather;
     }
   }
