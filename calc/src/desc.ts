@@ -492,12 +492,42 @@ function getEndOfTurn(
   let damage = 0;
   const texts = [];
 
+  if(field.hasT2Weather('Acid Downpour')){
+    if(!defender.hasAbility('Liquid Ooze') && !defender.hasAbility('Poison Heal') && !defender.hasType('Poison') &&
+    !defender.hasAbility('Magic Guard')){
+      damage -= Math.floor(defender.maxHP() / 16);
+      texts.push('Acid Downpour damage');
+    }
+    if(defender.hasAbility('Poison Heal')){
+      damage += Math.floor(defender.maxHP() / 16);
+      texts.push('Acid Downpour Poison Heal recovery');
+    }
+  } else if(field.hasT2Weather('Heavy Sandstorm') && !defender.hasType('Rock', 'Ground', 'Steel') &&
+  !defender.hasAbility('Magic Guard', 'Overcoat', 'Sand Force', 'Sand Rush', 'Sand Veil') &&
+  !defender.hasItem('Safety Goggles')){
+    damage -= Math.floor(defender.maxHP() / 16);
+    texts.push('Heavy Sandstorm damage');
+  } else if(field.hasT2Weather('Permafrost')){
+    if(!defender.hasType('Ice') && !defender.hasAbility('Magic Guard', 'Overcoat', 'Snow Warning', 'Snow Cloak', 'Slush Rush')){
+      damage -= Math.floor(defender.maxHP() / 16);
+    texts.push('Permafrost damage');
+    } else if(defender.hasAbility('Ice Body')){
+      damage += Math.floor(defender.maxHP() / 8);
+      texts.push('Permafrost Ice Body recovery');
+    }
+  } else if(field.hasT2Weather('Heavy Rain')){
+    if(defender.hasAbility('Rain Dish')){
+      damage += Math.floor(defender.maxHP() / 8);
+      texts.push('Heavy Rain Rain Dish recovery');
+    }
+  }
+
   if (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) {
     if (defender.hasAbility('Dry Skin', 'Solar Power')) {
       damage -= Math.floor(defender.maxHP() / 8);
       texts.push(defender.ability + ' damage');
     }
-  } else if (field.hasWeather('Rain') || field.hasT2Weather('Heavy Rain')) {
+  } else if (field.hasWeather('Rain')) {
     if (defender.hasAbility('Dry Skin')) {
       damage += Math.floor(defender.maxHP() / 8);
       texts.push('Dry Skin recovery');
@@ -506,6 +536,7 @@ function getEndOfTurn(
       texts.push('Rain Dish recovery');
     }
   } 
+  
     else if(field.hasWeather('Acid Rain')){
       if(!defender.hasType('Poison') && !defender.hasAbility('Magic Guard') && !defender.hasAbility('Liquid Ooze') && !defender.hasItem('Utility Umbrella')){
         damage -= Math.floor(defender.maxHP() / (gen.num === 2 ? 8 : 16));
@@ -516,9 +547,9 @@ function getEndOfTurn(
     if (
       !defender.hasType('Rock', 'Ground', 'Steel') &&
       !defender.hasAbility('Magic Guard', 'Overcoat', 'Sand Force', 'Sand Rush', 'Sand Veil') &&
-      !defender.hasItem('Safety Goggles')
+      !defender.hasItem('Safety Goggles') && !defender.hasItem('Utility Umbrella')
     ) {
-      damage -= Math.floor(defender.maxHP() / (gen.num === 2 ? 8 : 16));
+      damage -= Math.floor(defender.maxHP() / (gen.num === 2 ? 8 : 8));
       texts.push('sandstorm damage');
     }
   } else if (field.hasWeather('Hail', 'Snow')) {
@@ -531,7 +562,7 @@ function getEndOfTurn(
       !defender.hasItem('Safety Goggles') &&
       field.hasWeather('Hail')
     ) {
-      damage -= Math.floor(defender.maxHP() / 16);
+      damage -= Math.floor(defender.maxHP() / 8);
       texts.push('hail damage');
     }
   }

@@ -1527,6 +1527,10 @@ export function calculateDefenseSMSSSV(
   }
 
   // unlike all other defense modifiers, Sandstorm SpD boost gets applied directly
+  if(field.hasT2Weather('Heavy Sandstorm') && defender.hasType('Ground')){
+    defense = pokeRound((defense * 13) / 10);
+    desc.t2weather = field.t2weather;
+  }
   if (field.hasWeather('Sand') && field.hasT2Weather('Heavy Sandstorm') && defender.hasType('Rock') && !hitsPhysical) {
     defense = pokeRound((defense * 3) / 2);
     desc.weather = field.weather;
@@ -1702,8 +1706,8 @@ function calculateBaseDamageSMSSSV(
     }
   } else if (!defender.hasItem('Utility Umbrella')) {
     if 
-    (field.hasT2Weather('Harsh Sunshine') && field.hasWeather('Sun') && move.hasType('Fire')||
-     field.hasT2Weather('Heavy Rain') && field.hasWeather('Rain') && move.hasType('Water')){
+    (field.hasT2Weather('Harsh Sunshine') && (field.hasWeather('Sun') && !defender.hasItem('Utility Umbrella')) && move.hasType('Fire')||
+     field.hasT2Weather('Heavy Rain') && (field.hasWeather('Rain') && !defender.hasItem('Utility Umbrella')) && move.hasType('Water')){
       baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
       if(field.hasT2Weather('Harsh Sunshine') || field.hasT2Weather('Heavy Rain')){
         desc.t2weather = field.t2weather;
@@ -1712,8 +1716,8 @@ function calculateBaseDamageSMSSSV(
         desc.weather = field.weather;
       }
     } else if (
-      (field.hasWeather('Sun'/*, 'Harsh Sunshine'*/) && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire')) ||
-      (field.hasWeather('Rain'/*, 'Heavy Rain'*/) && !field.hasT2Weather('Heavy Rain') && move.hasType('Water'))
+      (field.hasWeather('Sun'/*, 'Harsh Sunshine'*/) && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire')) ||
+      (field.hasWeather('Rain'/*, 'Heavy Rain'*/) && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Heavy Rain') && move.hasType('Water'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 4915) / 4096);
       desc.weather = field.weather;
@@ -1723,14 +1727,15 @@ function calculateBaseDamageSMSSSV(
       baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
       desc.weather = field.weather;
     } else if (
-      (field.hasWeather('Sun') && field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
-      (field.hasWeather('Rain') && field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
+      ((field.hasWeather('Sun') && !defender.hasItem('Utility Umbrella')) && field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
+      ((field.hasWeather('Rain') && !defender.hasItem('Utility Umbrella')) && field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 2048) / 4096);
       desc.weather = field.weather;
+      desc.t2weather = field.t2weather;
     } else if (
-      (field.hasWeather('Sun') && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
-      (field.hasWeather('Rain') && !field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
+      (field.hasWeather('Sun') && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
+      (field.hasWeather('Rain') && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 3277) / 4096);
       desc.weather = field.weather;
@@ -1740,11 +1745,11 @@ function calculateBaseDamageSMSSSV(
       (!field.hasWeather('Rain') && field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 2867) / 4096);
-      desc.weather = field.weather;
+      desc.t2weather = field.t2weather;
     }
     else if(
-      field.hasWeather('Rain') && field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire') ||
-      field.hasWeather('Sun') && field.hasT2Weather('Heavy Rain') && move.hasType('Fire')
+      (field.hasWeather('Rain') && !defender.hasItem('Utility Umbrella')) && field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire') ||
+      (field.hasWeather('Sun') && !defender.hasItem('Utility Umbrella')) && field.hasT2Weather('Heavy Rain') && move.hasType('Fire')
     ){
       //0.9x
       baseDamage = pokeRound(OF32(baseDamage * 3686) / 4096);
