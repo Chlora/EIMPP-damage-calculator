@@ -1366,9 +1366,13 @@ export function calculateAtModsSMSSSV(
      (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) &&
      move.category === 'Special')) {
     atMods.push(6144);
+    if(field.hasT2Weather('Harsh Sunshine')){
+      desc.t2weather = field.t2weather;
+    }
+    else{
+      desc.weather = field.weather;
+    }
     desc.attackerAbility = attacker.ability;
-    desc.weather = field.weather;
-    //TODO rearrange desc
   } 
   //EIMPP: Give castform a 1.1x boost on STAB
   else if(attacker.hasAbility('Forecast') && attacker.hasType(move.type)){
