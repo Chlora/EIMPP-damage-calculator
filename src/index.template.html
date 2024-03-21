@@ -689,7 +689,7 @@
                     <span class="visually-hidden" id="selectBattleFormatInstruction">Select the battle format.</span>
                     
                         <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="singles-format" />
-                        <label class="btn btn-xxxwide for="doubles-format">EIPP (doubles mod)</label>
+                        <label class="btn btn-xxxwide btn-mid for="doubles-format">EIPP (doubles mod)</label>
                     
                     <div class="doublesButton">
                         <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="doubles-format" />
@@ -749,21 +749,27 @@
                         <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Rain" id="acidrain" />
                         <label class="btn btn-wide " for="acidrain">Acid Rain</label>
                     </div>
-                    <div class="gen-specific g6 g7 g8 g9" title="Select the current weather condition.">
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Harsh Sunshine" id="harsh-sunshine" />
-                        <label class="btn btn-xxxwide btn-left" for="harsh-sunshine">Harsh Sunshine</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Heavy Rain" id="heavy-rain" />
-                        <label class="btn btn-xxxwide btn-mid" for="heavy-rain">Heavy Rain</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Strong Winds" id="strong-winds" />
-                        <label class="btn btn-xxxwide btn-right" for="strong-winds">Strong Winds</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Permafrost" id="permafrost" />
-                        <label class="btn btn-xxxwide btn-left" for="permafrost">Permafrost</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Heavy Sandstorm" id="heavy-sandstorm" />
-                        <label class="btn btn-xxxwide btn-mid" for="heavy-sandstorm">Heavy Sandstorm</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Downpour" id="acid-downpour" />
-                        <label class="btn btn-xxxwide btn-right" for="acid-downpour">Acid Downpour</label>
-                    </div>
+                    
                   </div>
+                <div aria-labelledby="selectT2WeatherInstruction" role="radiogroup">
+                    <div class="gen-specific g6 g7 g8 g9" title="Select the current t2 weather condition.">
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Harsh Sunshine" id="harsh-sunshine" />
+                        <label class="btn btn-xxxwide btn-left" for="harsh-sunshine">Harsh Sunshine</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Heavy Rain" id="heavy-rain" />
+                        <label class="btn btn-xxxwide btn-mid" for="heavy-rain">Heavy Rain</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Strong Winds" id="strong-winds" />
+                        <label class="btn btn-xxxwide btn-right" for="strong-winds">Strong Winds</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Permafrost" id="permafrost" />
+                        <label class="btn btn-xxxwide btn-left" for="permafrost">Permafrost</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Heavy Sandstorm" id="heavy-sandstorm" />
+                        <label class="btn btn-xxxwide btn-mid" for="heavy-sandstorm">Heavy Sandstorm</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Acid Downpour" id="acid-downpour" />
+                        <label class="btn btn-xxxwide btn-right" for="acid-downpour">Acid Downpour</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="T2clear" id="t2-clear" checked="checked" />
+                        <label class="btn btn-xxxwide" for="t2-clear">No T2 Weather</label>
+                    </div>
+                </div>
+                  
                 <div aria-labelledby="selectGscWeatherInstruction" class="gen-specific g2 hide" role="radiogroup" style="width: 17.8em; margin: 0 auto 5px;" title="Select the current weather condition.">
                     <span class="visually-hidden" id="selectGscWeatherInstruction">Select the current weather condition.</span>
                     <input class="visually-hidden calc-trigger" type="radio" name="gscWeather" value="" id="gscClear" checked="checked" />
@@ -1662,10 +1668,10 @@
     <button type="button" id="dark-theme-toggle"></button>
     <script type="text/javascript" src="./js/dark-theme-toggle.js?054b266a"></script>
 </div>
-<div class="modCredits">-----EIMPP MOD CREDITS-----<br>EIMPP calculator mod made by Chlora<br>Huge thanks to Celestia for the help on making this!
+<div class="modCredits">-----EIMPP MOD CREDITS-----<br>EIMPP calculator mod made by Chlora<br>Huge thanks to Celestia for the various help!
     <ul>
         <li><a href="https://github.com/Chlora/EIMPP-damage-calculator" class="links-lighten">EIMPP calc GitHub repository</a></li>
-        <li><a href="https://docs.google.com/document/d/1zDhj2gsQUi0kROEuB8XiB3hjuhLLxO2qmkk0TKIaKDc/edit" class="links-lighten">EIMPP (WW) info</a></li>
+        <li><a href="https://docs.google.com/document/d/1zDhj2gsQUi0kROEuB8XiB3hjuhLLxO2qmkk0TKIaKDc/edit" class="links-lighten">EIMPP (WW) info document</a></li>
     </ul>
 
 </div>
