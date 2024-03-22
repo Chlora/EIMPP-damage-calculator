@@ -849,14 +849,14 @@ export function calculateBasePowerSMSSSV(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear')) || field.attackerSide.isTailwind) ? 2 : 1);
+    basePower = move.bp * (((field.weather && field.hasT2Weather('T2clear')) || (field.t2weather && !field.hasT2Weather('T2clear')) || field.attackerSide.isTailwind) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
         || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
     break;
   case 'Climatostrike':
-    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear')) || field.attackerSide.isTailwind) ? 2 : 1);
+    basePower = move.bp * (((field.weather && field.hasT2Weather('T2clear')) || (field.t2weather && !field.hasT2Weather('T2clear')) || field.attackerSide.isTailwind) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
     || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
