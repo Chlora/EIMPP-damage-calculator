@@ -1709,7 +1709,7 @@ function calculateBaseDamageSMSSSV(
     else{
       desc.weather = field.weather;
     }
-  } else if (!defender.hasItem('Utility Umbrella')) {
+  } else {
     if 
     (field.hasT2Weather('Harsh Sunshine') && (field.hasWeather('Sun') && !defender.hasItem('Utility Umbrella')) && move.hasType('Fire')||
      field.hasT2Weather('Heavy Rain') && (field.hasWeather('Rain') && !defender.hasItem('Utility Umbrella')) && move.hasType('Water')){
