@@ -153,11 +153,11 @@ export function calculateSMSSSV(
     const holdingUmbrella = attacker.hasItem('Utility Umbrella');
     type =
     //t2 comes first to always override t1 typing
-        field.hasT2Weather('Harsh Sunshine') && !holdingUmbrella ? 'Fire'
-      : field.hasT2Weather('Heavy Rain') && !holdingUmbrella ? 'Water'
-      : field.hasT2Weather('Heavy Sandstorm') && !holdingUmbrella ? 'Rock'
-      : field.hasT2Weather('Permafrost') && !holdingUmbrella ? 'Ice'
-      : field.hasT2Weather('Acid Downpour') && !holdingUmbrella ? 'Poison'
+        field.hasT2Weather('Harsh Sunshine') ? 'Fire'
+      : field.hasT2Weather('Heavy Rain') ? 'Water'
+      : field.hasT2Weather('Heavy Sandstorm') ? 'Rock'
+      : field.hasT2Weather('Permafrost') ? 'Ice'
+      : field.hasT2Weather('Acid Downpour') ? 'Poison'
       : field.hasT2Weather('Strong Winds') || field.attackerSide.isTailwind ? 'Flying'
       : field.hasWeather('Sun') && !holdingUmbrella ? 'Fire'
       : field.hasWeather('Rain') && !holdingUmbrella ? 'Water'
@@ -170,18 +170,18 @@ export function calculateSMSSSV(
   } else if (move.named('Climatostrike')) {
     const holdingUmbrella = attacker.hasItem('Utility Umbrella');
     type =
-        field.hasT2Weather('Harsh Sunshine') && !holdingUmbrella ? 'Fire'
-      : field.hasT2Weather('Heavy Rain') && !holdingUmbrella ? 'Water'
-      : field.hasT2Weather('Heavy Sandstorm') && !holdingUmbrella ? 'Rock'
-      : field.hasT2Weather('Permafrost') && !holdingUmbrella ? 'Ice'
-      : field.hasT2Weather('Acid Downpour') && !holdingUmbrella ? 'Poison'
-      : field.hasT2Weather('Strong Winds') || field.attackerSide.isTailwind ? 'Flying'
-      : field.hasWeather('Sun') && !holdingUmbrella ? 'Fire'
-      : field.hasWeather('Rain') && !holdingUmbrella ? 'Water'
-      : field.hasWeather('Sand') && !holdingUmbrella ? 'Rock'
-      : field.hasWeather('Hail', 'Snow') && !holdingUmbrella ? 'Ice'
-      : field.hasWeather('Acid Rain') && !holdingUmbrella ? 'Poison'
-      : 'Normal';
+    field.hasT2Weather('Harsh Sunshine') ? 'Fire'
+    : field.hasT2Weather('Heavy Rain') ? 'Water'
+    : field.hasT2Weather('Heavy Sandstorm') ? 'Rock'
+    : field.hasT2Weather('Permafrost') ? 'Ice'
+    : field.hasT2Weather('Acid Downpour') ? 'Poison'
+    : field.hasT2Weather('Strong Winds') || field.attackerSide.isTailwind ? 'Flying'
+    : field.hasWeather('Sun') && !holdingUmbrella ? 'Fire'
+    : field.hasWeather('Rain') && !holdingUmbrella ? 'Water'
+    : field.hasWeather('Sand') && !holdingUmbrella ? 'Rock'
+    : field.hasWeather('Hail', 'Snow') && !holdingUmbrella ? 'Ice'
+    : field.hasWeather('Acid Rain') && !holdingUmbrella ? 'Poison'
+    : 'Normal';
     desc.weather = field.weather;
     desc.moveType = type;
   } else if (move.named('Judgment') && attacker.item && attacker.item.includes('Plate')) {
@@ -849,14 +849,14 @@ export function calculateBasePowerSMSSSV(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear'))) ? 2 : 1);
+    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear')) || field.attackerSide.isTailwind) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
         || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
     break;
   case 'Climatostrike':
-    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear'))) ? 2 : 1);
+    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear')) || field.attackerSide.isTailwind) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
     || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
