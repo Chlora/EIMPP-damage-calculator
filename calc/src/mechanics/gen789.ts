@@ -45,6 +45,7 @@ import {
   pokeRound,
   isQPActive,
 } from './util';
+import { Species } from '@pkmn/dex';
 
 export function calculateSMSSSV(
   gen: Generation,
@@ -115,10 +116,11 @@ export function calculateSMSSSV(
     'Neutralizing Gas',
     'Prism Armor',
     'Shadow Shield'
-  );
+  ) || (field.hasT2Weather('Acid Downpour') && !attacker.hasType('Poison') && !attacker.hasAbility('Poison Heal') && !attacker.hasAbility('Liquid Ooze'));
 
   const attackerIgnoresAbility = (attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze')) || 
   (!defender.hasType('Poison') && !defender.hasAbility('Liquid Ooze') && !defender.hasAbility('Poison Heal') && field.hasT2Weather('Acid Downpour'));
+
   const moveIgnoresAbility = move.named(
     'G-Max Drum Solo',
     'G-Max Fire Ball',
@@ -847,14 +849,14 @@ export function calculateBasePowerSMSSSV(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * ((field.weather || field.t2weather) ? 2 : 1);
+    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear'))) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
         || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
     break;
   case 'Climatostrike':
-    basePower = move.bp * ((field.weather || field.t2weather) ? 2 : 1);
+    basePower = move.bp * ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear'))) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand') 
     || field.hasT2Weather('Harsh Sunshine','Heavy Rain','Permafrost','Acid Downpour', 'Heavy Sandstorm', 'Strong Winds')) &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
@@ -1686,6 +1688,9 @@ function calculateBaseDamageSMSSSV(
     baseDamage = pokeRound(OF32(baseDamage * 1024) / 4096);
   }
 
+  /*if(attacker.named('Castform') && ((field.weather || (field.t2weather && !field.hasT2Weather('T2clear'))))){
+    attacker.species = 
+  }*/
   if(move.named('Elytron Blow')){
     if(field.hasT2Weather('Strong Winds')){
       baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
