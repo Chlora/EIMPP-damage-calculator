@@ -533,7 +533,7 @@ export function calculateSMSSSV(
     move.named('Shell Side Arm') &&
     getShellSideArmCategory(attacker, defender) === 'Physical'
       ? 'atk'
-      : move.named('Body Press')
+      : (move.named('Body Press') || move.named('Elytron Blow'))
         ? 'def'
         : move.category === 'Special'
           ? 'spa'
@@ -1311,7 +1311,7 @@ export function calculateAttackSMSSSV(
     move.named('Shell Side Arm') &&
     getShellSideArmCategory(attacker, defender) === 'Physical'
       ? 'atk'
-      : move.named('Body Press')
+      : (move.named('Body Press') || move.named('Elytron Blow'))
         ? 'def'
         : move.category === 'Special'
           ? 'spa'
