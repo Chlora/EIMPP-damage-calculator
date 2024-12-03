@@ -57,16 +57,9 @@
     <span class="title-text main-title-text">EIMPP Damage Calculator</span>
     <div aria-label="Settings" role="region">
         <span class="genSelection" aria-labelledby="selectGenInstruction" role="radiogroup" title="Select the generation.">
-            <span class="visually-hidden" id="selectGenInstruction">Select the generation.</span>
-            <input class="gen visually-hidden" type="radio" name="gen" value="1" id="gen1" /><label class="btn btn-small btn-left" for="gen1">RBY</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="2" id="gen2" /><label class="btn btn-small btn-mid" for="gen2">GSC</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="3" id="gen3" /><label class="btn btn-small btn-mid" for="gen3">ADV</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="4" id="gen4" /><label class="btn btn-small btn-mid" for="gen4">DPP</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="5" id="gen5" /><label class="btn btn-small btn-mid" for="gen5">B/W</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="6" id="gen6" /><label class="btn btn-small btn-mid" for="gen6">X/Y</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="7" id="gen7" /><label class="btn btn-small btn-mid" for="gen7">S/M</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="8" id="gen8" /><label class="btn btn-small btn-mid" for="gen8">S/S</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="9" id="gen9" checked="checked" /><label class="btn btn-small btn-right" for="gen9">S/V</label>
+            <span id="selectGenInstruction"></span>
+            <input class="gen visually-hidden" type="radio" name="gen" value="9" id="gen9" /><label class="btn btn-wide btn-left" for="gen9">EIMPP PIC</label>
+            <input class="gen visually-hidden" type="radio" name="gen" value="8" id="gen8" checked="checked"/><label class="btn btn-wide btn-right" for="gen9">EIMPP WW</label>
         </span>
         <span class="notationSelection" aria-labelledby="selectNotationInstruction" role="radiogroup" title="Select the output notation.">
             <span class="visually-hidden" id="selectNotationInstruction">Select the output notation.</span>
@@ -690,7 +683,7 @@
                     <span class="visually-hidden" id="selectBattleFormatInstruction">Select the battle format.</span>
                     
                         <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="singles-format" />
-                        <label class="btn btn-xxxwide btn-mid for="doubles-format">EIMPP WW</label>
+                        <label class="btn btn-xxxwide btn-mid for="doubles-format">EIMPP</label>
                     
                     <div class="doublesButton">
                         <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="doubles-format" />
@@ -711,10 +704,10 @@
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Electric" id="electric" /><label class="btn btn-xxxwide btn-left" for="electric">Electric Terrain</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Grassy" id="grassy" /><label class="btn btn-xxxwide btn-mid" for="grassy">Grassy Terrain</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Misty" id="misty" /><label class="btn btn-xxxwide btn-right" for="misty">Misty Terrain</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Psychic" id="psychic" /><label class="btn btn-xxxwide btn-left" for="psychic">Psychic Terrain</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Spooky" id="spooky" /><label class="btn btn-xxxwide btn-mid" for="spooky">Spooky Terrain</label>
+                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Psychic" id="psychic" /><label class="btn btn-xxxwide btn-mid" for="psychic">Psychic Terrain</label>
+                    <!--<input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Spooky" id="spooky" /><label class="btn btn-xxxwide btn-mid" for="spooky">Spooky Terrain</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Crawly" id="crawly" /><label class="btn btn-xxxwide btn-right" for="crawly">Crawly Terrain</label>
-                </div>
+                --></div>
                 <div aria-labelledby="selectRuinInstruction" class="gen-specific g9 format-specific doubles" role="group" style="margin: 5px auto auto;" title="Select the ruin abilities from other Pok&eacute;mon on the field.">
                     <span class="visually-hidden" id="selectRuinInstruction">Select the active Ruin abilities from other Poke&eacute;mon on the field.</span>
                     <input class="visually-hidden calc-trigger" type="checkbox" name="ruin" value="Beads" id="beads" />
@@ -747,12 +740,12 @@
                             <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Snow" id="snow" />
                             <label class="btn btn-small btn-right" for="snow">Snow</label>
                         </span>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Rain" id="acidrain" />
-                        <label class="btn btn-wide " for="acidrain">Acid Rain</label>
+                        <!--<input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Rain" id="acidrain" />
+                        <label class="btn btn-wide " for="acidrain">Acid Rain</label>!-->
                     </div>
                     
                   </div>
-                <div aria-labelledby="selectT2WeatherInstruction" role="radiogroup">
+                <!--<div aria-labelledby="selectT2WeatherInstruction" role="radiogroup">
                     <div class="gen-specific g6 g7 g8 g9" title="Select the current t2 weather condition.">
                         <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Harsh Sunshine" id="harsh-sunshine" />
                         <label class="btn btn-xxxwide btn-left" for="harsh-sunshine">Harsh Sunshine</label>
@@ -769,7 +762,7 @@
                         <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="T2clear" id="t2-clear" checked="checked" />
                         <label class="btn btn-xxxwide" for="t2-clear">No T2 Weather</label>
                     </div>
-                </div>
+                </div>!-->
                   
                 <div aria-labelledby="selectGscWeatherInstruction" class="gen-specific g2 hide" role="radiogroup" style="width: 17.8em; margin: 0 auto 5px;" title="Select the current weather condition.">
                     <span class="visually-hidden" id="selectGscWeatherInstruction">Select the current weather condition.</span>
