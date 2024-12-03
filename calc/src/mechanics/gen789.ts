@@ -1378,7 +1378,12 @@ export function calculateAtModsSMSSSV(
   } 
   //EIMPP: Give castform a 1.1x boost on STAB
   else if(attacker.hasAbility('Forecast') && attacker.hasType(move.type)){
-    atMods.push(4506);
+    //atMods.push(4506);
+  }
+  else if(attacker.hasAbility('Lurker')){
+    if(field.hasWeather('Sand')) {
+      move.priority = 2
+    }
   }
   else if (
     // Gorilla Tactics has no effect during Dynamax (Anubis)
@@ -1724,7 +1729,7 @@ function calculateBaseDamageSMSSSV(
       (field.hasWeather('Sun'/*, 'Harsh Sunshine'*/) && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Fire')) ||
       (field.hasWeather('Rain'/*, 'Heavy Rain'*/) && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Heavy Rain') && move.hasType('Water'))
     ) {
-      baseDamage = pokeRound(OF32(baseDamage * 4915) / 4096);
+      baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
       desc.weather = field.weather;
     } else if ( 
     field.hasT2Weather('Harsh Sunshine') && !field.hasWeather('Sun') && move.hasType('Fire')||

@@ -38,6 +38,7 @@ const ADV = [
   'Lightning Rod',
   'Limber',
   'Liquid Ooze',
+  'Lurker',
   'Magma Armor',
   'Magnet Pull',
   'Marvel Scale',
