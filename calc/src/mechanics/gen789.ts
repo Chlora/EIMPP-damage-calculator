@@ -1546,7 +1546,7 @@ export function calculateDefenseSMSSSV(
     defense = pokeRound((defense * 13) / 10);
     desc.t2weather = field.t2weather;
   } else if (field.hasWeather('Sand') && !field.hasT2Weather('Heavy Sandstorm') && defender.hasType('Rock') && !hitsPhysical) {
-    defense = pokeRound((defense * 12) / 10);
+    defense = pokeRound((defense * 15) / 10);
     desc.weather = field.weather;
   }
   if (field.hasWeather('Snow') && field.hasT2Weather('Permafrost') && defender.hasType('Ice') && hitsPhysical) {
@@ -1554,7 +1554,7 @@ export function calculateDefenseSMSSSV(
     desc.weather = field.weather;
     desc.t2weather = field.t2weather;
   } else if (field.hasWeather('Snow') && !field.hasT2Weather('Permafrost') && defender.hasType('Ice') && hitsPhysical){
-    defense = pokeRound((defense * 12) / 10);
+    defense = pokeRound((defense * 15) / 10);
     desc.weather = field.weather;
   }
   else if (!field.hasWeather('Snow') && field.hasT2Weather('Permafrost') && defender.hasType('Ice') && hitsPhysical){
@@ -1747,7 +1747,7 @@ function calculateBaseDamageSMSSSV(
       (field.hasWeather('Sun') && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Harsh Sunshine') && move.hasType('Water') && !attacker.hasAbility('Sun Shield')) ||
       (field.hasWeather('Rain') && !defender.hasItem('Utility Umbrella') && !field.hasT2Weather('Heavy Rain') && move.hasType('Fire'))
     ) {
-      baseDamage = pokeRound(OF32(baseDamage * 3277) / 4096);
+      baseDamage = pokeRound(OF32(baseDamage * 2048) / 4096);
       desc.weather = field.weather;
     } 
     else if (
