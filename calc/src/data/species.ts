@@ -9261,7 +9261,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Fierce Vines': {
     types: ['Grass', 'Fighting'],
-    bs: {hp: 75, at: 135, df: 11, sa: 79, sd: 79, sp: 91},
+    bs: {hp: 75, at: 135, df: 111, sa: 79, sd: 79, sp: 91},
     weightkg: 25,
     abilities: {0: 'Protosynthesis'},
     gender : 'N',
