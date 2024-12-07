@@ -4963,6 +4963,12 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     makesContact: true,
     target: 'allAdjacentFoes',
   },
+  'Spike Shot': {
+    bp: 80,
+    type: 'Grass',
+    category: 'Physical',
+    drain: [1, 2],
+  },
 };
 
 const SV: {[name: string]: MoveData} = extend(true, {}, SS, SV_PATCH);
