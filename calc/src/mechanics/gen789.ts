@@ -321,7 +321,7 @@ export function calculateSMSSSV(
     : 1;
   let typeEffectiveness = type1Effectiveness * type2Effectiveness;
   if(typeEffectiveness == 4){
-    typeEffectiveness = 3;
+    //typeEffectiveness = 3;
   }
 
   if (defender.teraType && defender.teraType !== 'Stellar') {
