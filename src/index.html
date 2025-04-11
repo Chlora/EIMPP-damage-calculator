@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <title>EIMPP Damage Calculator</title>
+    <link rel="icon" type="image/x-icon" href="./img/cofagrigus.ico ">
     <link type="text/css" rel="stylesheet" href="./js/vendor/select2/select2.css" />
-    <link type="text/css" rel="stylesheet" href="./css/main.css?0aec6147" />
+    <link type="text/css" rel="stylesheet" href="./css/main.css?00d91beb" />
     <link type="text/css" rel="stylesheet" href="./css/vendor/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="./css/dark-theme.css" id="dark-theme-styles">
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -56,16 +57,9 @@
     <span class="title-text main-title-text">EIMPP Damage Calculator</span>
     <div aria-label="Settings" role="region">
         <span class="genSelection" aria-labelledby="selectGenInstruction" role="radiogroup" title="Select the generation.">
-            <span class="visually-hidden" id="selectGenInstruction">Select the generation.</span>
-            <input class="gen visually-hidden" type="radio" name="gen" value="1" id="gen1" /><label class="btn btn-small btn-left" for="gen1">RBY</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="2" id="gen2" /><label class="btn btn-small btn-mid" for="gen2">GSC</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="3" id="gen3" /><label class="btn btn-small btn-mid" for="gen3">ADV</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="4" id="gen4" /><label class="btn btn-small btn-mid" for="gen4">DPP</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="5" id="gen5" /><label class="btn btn-small btn-mid" for="gen5">B/W</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="6" id="gen6" /><label class="btn btn-small btn-mid" for="gen6">X/Y</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="7" id="gen7" /><label class="btn btn-small btn-mid" for="gen7">S/M</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="8" id="gen8" /><label class="btn btn-small btn-mid" for="gen8">S/S</label>
-            <input class="gen visually-hidden" type="radio" name="gen" value="9" id="gen9" checked="checked" /><label class="btn btn-small btn-right" for="gen9">S/V</label>
+            <span id="selectGenInstruction"></span>
+            <input class="gen visually-hidden" type="radio" name="gen" value="9" id="gen9" /><label class="btn btn-wide btn-left" for="gen9">EIMPP PIC</label>
+            <input class="gen visually-hidden" type="radio" name="gen" value="8" id="gen8" checked="checked"/><label class="btn btn-wide btn-right" for="gen9">EIMPP WW</label>
         </span>
         <span class="notationSelection" aria-labelledby="selectNotationInstruction" role="radiogroup" title="Select the output notation.">
             <span class="visually-hidden" id="selectNotationInstruction">Select the output notation.</span>
@@ -153,13 +147,13 @@
                     <label>Type</label>
                     <select aria-label="type1" class="type1 terrain-trigger calc-trigger"></select>
                     <select aria-label="type2" class="type2 terrain-trigger calc-trigger"></select>
-                    <small class="right">(<a class="analysis links-lighten" target="_blank" href="">Smogon&nbsp;analysis</a>)</small>
+                    <!--<small class="right">(<a class="analysis links-lighten" target="_blank" href="">Smogon&nbsp;analysis</a>)</small>-->
                 </div>
-                <div class="gen-specific g9">
+                <!--<div class="gen-specific g9">
                     <label>Tera Type</label>
                     <select class="teraType terrain-trigger calc-trigger"></select>
                     <input type="checkbox" title= "Has this Pok&eacute;mon terastalized?" class="teraToggle terrain-trigger calc-trigger">
-                </div>
+                </div>-->
                 <div class="hide">
                     <label>Forme</label>
                     <select class="forme calc-trigger"></select>
@@ -168,7 +162,7 @@
                     <label>Gender</label>
                     <select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select>
                 </div>
-                <div>
+                <div class="modHide">
                     <label for="levelL1">Level</label>
                     <input class="level calc-trigger" id="levelL1" value="100" />
                 </div>
@@ -687,10 +681,14 @@
                 <legend align="center">Field</legend>
                 <div aria-labelledby="selectBattleFormatInstruction" class="gen-specific g3 g4 g5 g6 g7 g8 g9" role="radiogroup" style="width: 10.6em; margin: 0 auto 5px;" title="Select the battle format.">
                     <span class="visually-hidden" id="selectBattleFormatInstruction">Select the battle format.</span>
-                    <input class="visually-hidden calc-trigger" type="radio" name="format" value="Singles" id="singles-format" />
-                    <label class="btn btn-left" for="singles-format">Balls</label>
-                    <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="doubles-format" />
-                    <label class="btn btn-right" for="doubles-format">Doubles</label>
+                    
+                        <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="singles-format" />
+                        <label class="btn btn-xxxwide btn-mid for="doubles-format">EIMPP</label>
+                    
+                    <div class="doublesButton">
+                        <input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="doubles-format" />
+                        <label class="btn btn-right" for="doubles-format">Doubles</label>
+                    </div>
                 </div>
                 <div class="levelsSelect" aria-labelledby="selectDefaultLevelInstruction" role="radiogroup" style="margin: auto auto 5px;" title="Select the default level.">
                    <span class="visually-hidden" id="selectDefaultLevelInstruction">Select the default level.</span>
@@ -706,9 +704,9 @@
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Electric" id="electric" /><label class="btn btn-xxxwide btn-left" for="electric">Electric Terrain</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Grassy" id="grassy" /><label class="btn btn-xxxwide btn-mid" for="grassy">Grassy Terrain</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Misty" id="misty" /><label class="btn btn-xxxwide btn-right" for="misty">Misty Terrain</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Psychic" id="psychic" /><label class="btn btn-xxxwide btn-left" for="psychic">Psychic Terrain</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Spooky" id="spooky" /><label class="btn btn-xxxwide btn-mid" for="spooky">Spooky Terrain</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Crawly" id="crawly" /><label class="btn btn-xxxwide btn-right" for="crawly">Crawly Terrain</label>
+                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Psychic" id="psychic" /><label class="btn btn-xxxwide btn-mid" for="psychic">Psychic Terrain</label>
+                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Spooky" id="spooky" /><label class="btn btn-xxxwide btn-mid" for="spooky">Fog</label>
+                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Crawly" id="crawly" /><label class="btn btn-xxxwide btn-right" for="crawly">Skitter Field</label>
                 </div>
                 <div aria-labelledby="selectRuinInstruction" class="gen-specific g9 format-specific doubles" role="group" style="margin: 5px auto auto;" title="Select the ruin abilities from other Pok&eacute;mon on the field.">
                     <span class="visually-hidden" id="selectRuinInstruction">Select the active Ruin abilities from other Poke&eacute;mon on the field.</span>
@@ -745,21 +743,27 @@
                         <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Rain" id="acidrain" />
                         <label class="btn btn-wide " for="acidrain">Acid Rain</label>
                     </div>
-                    <div class="gen-specific g6 g7 g8 g9" title="Select the current weather condition.">
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Harsh Sunshine" id="harsh-sunshine" />
-                        <label class="btn btn-xxxwide btn-left" for="harsh-sunshine">Harsh Sunshine</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Heavy Rain" id="heavy-rain" />
-                        <label class="btn btn-xxxwide btn-mid" for="heavy-rain">Heavy Rain</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Strong Winds" id="strong-winds" />
-                        <label class="btn btn-xxxwide btn-right" for="strong-winds">Strong Winds</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Permafrost" id="permafrost" />
-                        <label class="btn btn-xxxwide btn-left" for="permafrost">Permafrost</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Heavy Sandstorm" id="heavy-sandstorm" />
-                        <label class="btn btn-xxxwide btn-mid" for="heavy-sandstorm">Heavy Sandstorm</label>
-                        <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Downpour" id="acid-downpour" />
-                        <label class="btn btn-xxxwide btn-right" for="acid-downpour">Acid Downpour</label>
-                    </div>
+                    
                   </div>
+                <!--<div aria-labelledby="selectT2WeatherInstruction" role="radiogroup">
+                    <div class="gen-specific g6 g7 g8 g9" title="Select the current t2 weather condition.">
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Harsh Sunshine" id="harsh-sunshine" />
+                        <label class="btn btn-xxxwide btn-left" for="harsh-sunshine">Harsh Sunshine</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Heavy Rain" id="heavy-rain" />
+                        <label class="btn btn-xxxwide btn-mid" for="heavy-rain">Heavy Rain</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Strong Winds" id="strong-winds" />
+                        <label class="btn btn-xxxwide btn-right" for="strong-winds">Strong Winds</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Permafrost" id="permafrost" />
+                        <label class="btn btn-xxxwide btn-left" for="permafrost">Permafrost</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Heavy Sandstorm" id="heavy-sandstorm" />
+                        <label class="btn btn-xxxwide btn-mid" for="heavy-sandstorm">Heavy Sandstorm</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="Acid Downpour" id="acid-downpour" />
+                        <label class="btn btn-xxxwide btn-right" for="acid-downpour">Acid Downpour</label>
+                        <input class="visually-hidden calc-trigger" type="radio" name="t2weather" value="T2clear" id="t2-clear" checked="checked" />
+                        <label class="btn btn-xxxwide" for="t2-clear">No T2 Weather</label>
+                    </div>
+                </div>!-->
+                  
                 <div aria-labelledby="selectGscWeatherInstruction" class="gen-specific g2 hide" role="radiogroup" style="width: 17.8em; margin: 0 auto 5px;" title="Select the current weather condition.">
                     <span class="visually-hidden" id="selectGscWeatherInstruction">Select the current weather condition.</span>
                     <input class="visually-hidden calc-trigger" type="radio" name="gscWeather" value="" id="gscClear" checked="checked" />
@@ -1066,13 +1070,13 @@
                     <label>Type</label>
                     <select aria-label="Type 1" class="type1 terrain-trigger calc-trigger"></select>
                     <select aria-label="Type 2" class="type2 terrain-trigger calc-trigger"></select>
-                    <small class="right">(<a class="analysis links-lighten" target="_blank" href="">Smogon&nbsp;analysis</a>)</small>
+                    <!--<small class="right">(<a class="analysis links-lighten" target="_blank" href="">Smogon&nbsp;analysis</a>)</small>-->
                 </div>
-                <div class="gen-specific g9">
+                <!--<div class="gen-specific g9">
                     <label>Tera Type</label>
                     <select class="teraType terrain-trigger calc-trigger"></select>
                     <input type="checkbox" title= "Has this Pok&eacute;mon terastalized?" class="teraToggle terrain-trigger calc-trigger">
-                </div>
+                </div>-->
                 <div class="hide">
                     <label>Forme</label>
                     <select class="forme calc-trigger"></select>
@@ -1081,7 +1085,7 @@
                     <label>Gender</label>
                     <select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select>
                 </div>
-                <div>
+                <div class="modHide">
                     <label for="levelR1">Level</label>
                     <input class="level calc-trigger" id="levelR1" value="100" />
                 </div>
@@ -1614,8 +1618,8 @@
     </script>
     <script type="text/javascript" src="./calc/util.js?8fa0c7ff"></script>
     <script type="text/javascript" src="./calc/stats.js?9220179f"></script>
-    <script type="text/javascript" src="./calc/data/species.js?532ae095"></script>
-    <script type="text/javascript" src="./js/data/sets/gen9.js?d1293b04"></script>
+    <script type="text/javascript" src="./calc/data/species.js?9771263a"></script>
+    <script type="text/javascript" src="./js/data/sets/gen9.js?0.30417127165929636"></script>
     <script type="text/javascript" src="./js/data/sets/gen8.js?d92917bf"></script>
     <script type="text/javascript" src="./js/data/sets/gen7.js?8332c606"></script>
     <script type="text/javascript" src="./js/data/sets/gen6.js?02c33c20"></script>
@@ -1626,31 +1630,31 @@
     <script type="text/javascript" src="./js/data/sets/gen1.js?3304771f"></script>
     <script type="text/javascript" src="./calc/data/types.js?6b065b89"></script>
     <script type="text/javascript" src="./calc/data/natures.js?04f00dc5"></script>
-    <script type="text/javascript" src="./calc/data/abilities.js?2e87216e"></script>
-    <script type="text/javascript" src="./calc/data/moves.js?80812cb8"></script>
-    <script type="text/javascript" src="./calc/data/items.js?81a1fe7e"></script>
+    <script type="text/javascript" src="./calc/data/abilities.js?4de2cc9e"></script>
+    <script type="text/javascript" src="./calc/data/moves.js?42415240"></script>
+    <script type="text/javascript" src="./calc/data/items.js?e69d9382"></script>
     <script type="text/javascript" src="./calc/data/index.js?083d2bc9"></script>
     <script type="text/javascript" src="./calc/move.js?01e033ea"></script>
     <script type="text/javascript" src="./calc/pokemon.js?e0fe71b6"></script>
-    <script type="text/javascript" src="./calc/field.js?2c7f95da"></script>
+    <script type="text/javascript" src="./calc/field.js?5f76e16d"></script>
     <script type="text/javascript" src="./calc/items.js?3cbea98f"></script>
-    <script type="text/javascript" src="./calc/mechanics/util.js?340148be"></script>
-    <script type="text/javascript" src="./calc/mechanics/gen789.js?0ed171fa"></script>
-    <script type="text/javascript" src="./calc/mechanics/gen56.js?c5b0789a"></script>
+    <script type="text/javascript" src="./calc/mechanics/util.js?267f09fe"></script>
+    <script type="text/javascript" src="./calc/mechanics/gen789.js?649a4e03"></script>
+    <script type="text/javascript" src="./calc/mechanics/gen56.js?42435582"></script>
     <script type="text/javascript" src="./calc/mechanics/gen4.js?ab7837a9"></script>
     <script type="text/javascript" src="./calc/mechanics/gen3.js?5064940a"></script>
     <script type="text/javascript" src="./calc/mechanics/gen12.js?9c9fcd6e"></script>
     <script type="text/javascript" src="./calc/calc.js?cd072314"></script>
-    <script type="text/javascript" src="./calc/desc.js?3d034309"></script>
+    <script type="text/javascript" src="./calc/desc.js?daf4a27c"></script>
     <script type="text/javascript" src="./calc/result.js?d5c7552b"></script>
     <script type="text/javascript" src="./calc/adaptable.js?afeb3759"></script>
     <script type="text/javascript" src="./calc/index.js?2377cbc8"></script>
-    <script type="text/javascript" src="./js/shared_controls.js?422deee6"></script>
+    <script type="text/javascript" src="./js/shared_controls.js?fbc0f671"></script>
     <script type="text/javascript" src="./js/index_randoms_controls.js?8efdf1b2"></script>
     <script type="text/javascript" src="./js/moveset_import.js?19460119"></script>
 </div>
 
-<div class="credits">Created by Honko, maintained by Austin and Kris
+<div class="credits">-----ORIGINAL CREDITS-----<br> Created by Honko, maintained by Austin and Kris
     <ul><li><a href="https://github.com/smogon/damage-calc/contributors" class="links-lighten" target="_blank">Contributors</a></li>
     <li><a href="https://www.smogon.com/forums/threads/pok%C3%A9mon-showdown-damage-calculator.3593546/" class="links-lighten" target="_blank">Bug Reports</a></li>
     <li><a href="https://github.com/smogon/damage-calc" class="links-lighten" target="_blank">GitHub repository</a></li></ul>
@@ -1658,9 +1662,12 @@
     <button type="button" id="dark-theme-toggle"></button>
     <script type="text/javascript" src="./js/dark-theme-toggle.js?054b266a"></script>
 </div>
-<div class="modCredits">EIMPP calculator mod made by Chlora
+<div class="modCredits">-----EIMPP MOD CREDITS-----<br>EIMPP calculator mod made by Chlora<br>Huge thanks to Celestia for the various help!
     <ul>
-        
+        <li><a href ="https://discord.gg/2Twr6NJpyp" class ="links-lighten">EIMPP permanent Discord invite</a></li>
+        <li><a href="https://github.com/Chlora/EIMPP-damage-calculator" class="links-lighten">EIMPP calc GitHub repository</a></li>
+        <!--<li><a href="https://docs.google.com/document/d/1zDhj2gsQUi0kROEuB8XiB3hjuhLLxO2qmkk0TKIaKDc/edit" class="links-lighten">EIMPP (WW) info document</a></li>
+    !-->
     </ul>
 
 </div>
