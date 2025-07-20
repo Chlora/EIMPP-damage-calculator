@@ -109,7 +109,7 @@ function performCalculations() {
 							data.pop();
 						}
 						data.push(attacker.moves[n].name.replace("Hidden Power", "HP"));
-						data.push(minPercentage + " - " + maxPercentage + "%");
+						data.push(minPercentage +  "%");
 						data.push(minPixels + " - " + maxPixels + "px");
 						data.push(attacker.moves[n].bp === 0 ? 'nice move' : (result.kochance(false).text || 'possibly the worst move ever'));
 					}

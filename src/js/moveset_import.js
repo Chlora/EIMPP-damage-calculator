@@ -16,12 +16,7 @@ function ExportPokemon(pokeInfo) {
 	finalText = pokemon.name + (pokemon.item ? " @ " + pokemon.item : "") + "\n";
 	finalText += "Level: " + pokemon.level + "\n";
 	finalText += pokemon.nature && gen > 2 ? pokemon.nature + " Nature" + "\n" : "";
-	if (gen === 9) {
-		var teraType = pokeInfo.find(".teraType").val();
-		if (teraType !== undefined && teraType !== pokemon.types[0]) {
-			finalText += "Tera Type: " + teraType + "\n";
-		}
-	}
+	finalText += pokemon.teraType && gen > 8 ? "Tera Type: " + pokemon.teraType : "";
 	finalText += pokemon.ability ? "Ability: " + pokemon.ability + "\n" : "";
 	if (gen > 2) {
 		var EVs_Array = [];

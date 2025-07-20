@@ -284,7 +284,6 @@ $(".ability").bind("keyup change", function () {
 
 function autosetQP(pokemon) {
 	var currentWeather = $("input:radio[name='weather']:checked").val();
-	var currentT2Weather = $("input:radio[name='t2weather']:checked").val();
 	var currentTerrain = $("input:checkbox[name='terrain']:checked").val() || "No terrain";
 
 	var item = pokemon.find(".item").val();
@@ -306,19 +305,11 @@ function autosetQP(pokemon) {
 
 $("#p1 .ability").bind("keyup change", function () {
 	autosetWeather($(this).val(), 0);
-	t2WeatherWorkings($(this).val(), 0);
 	autosetTerrain($(this).val(), 0);
 	autosetQP($(this).closest(".poke-info"));
 });
 
 $("input[name='weather']").change(function () {
-	var allPokemon = $('.poke-info');
-	allPokemon.each(function () {
-		autosetQP($(this));
-	});
-});
-
-$("input[name='t2weather']").change(function () {
 	var allPokemon = $('.poke-info');
 	allPokemon.each(function () {
 		autosetQP($(this));
@@ -356,39 +347,26 @@ function autosetWeather(ability, i) {
 			$("#hail").prop("checked", true);
 		}
 		break;
+	case "Sulphurous Presence": //eimpp custom
+		lastAutoWeather[i] = "Acid Rain";
+		$("#acidrain").prop("checked", true);
+		break;
+	case "Desolate Land":
+		lastAutoWeather[i] = "Harsh Sunshine";
+		$("#harsh-sunshine").prop("checked", true);
+		break;
+	case "Primordial Sea":
+		lastAutoWeather[i] = "Heavy Rain";
+		$("#heavy-rain").prop("checked", true);
+		break;
+	case "Delta Stream":
+		lastAutoWeather[i] = "Strong Winds";
+		$("#strong-winds").prop("checked", true);
+		break;
 	default:
 		lastAutoWeather[i] = "";
 		var newWeather = lastAutoWeather[1 - i] !== "" ? lastAutoWeather[1 - i] : "";
 		$("input:radio[name='weather'][value='" + newWeather + "']").prop("checked", true);
-		break;
-	}
-}
-
-var lastManualT2Weather = "T2clear";
-var lastAutoT2Weather = ["", ""];
-function t2WeatherWorkings(ability, i){
-	var currentT2Weather = $("input:radio[name='t2weather']:checked").val();
-	if (lastAutoT2Weather.indexOf(currentT2Weather) === -1) {
-		lastManualT2Weather = currentT2Weather;
-		lastAutoT2Weather[1 - i] = "";
-	}
-	switch(ability){
-	case "Desolate Land":
-		lastAutoT2Weather[i] = "Harsh Sunshine";
-		$("#harsh-sunshine").prop("checked", true);
-		break;
-	case "Primordial Sea":
-		lastAutoT2Weather[i] = "Heavy Rain";
-		$("#heavy-rain").prop("checked", true);
-		break;
-	case "Delta Stream":
-		lastAutoT2Weather[i] = "Strong Winds";
-		$("#strong-winds").prop("checked", true);
-		break;
-	default:
-		lastAutoT2Weather[i] = "T2clear";
-		var newT2Weather = lastAutoT2Weather[1 - i] !== "T2clear" ? lastAutoT2Weather[1 - i] : "T2clear";
-		$("input:radio[name='t2weather'][value='" + newT2Weather + "']").prop("checked", true);
 		break;
 	}
 }
@@ -411,6 +389,10 @@ function autosetTerrain(ability, i) {
 	// terrain input uses checkbox instead of radio, need to uncheck all first
 	$("input:checkbox[name='terrain']:checked").prop("checked", false);
 	switch (ability) {
+	case "Ectoplasmic Essence": //eimpp custom, FOG/spooky terrain
+		lastAutoTerrain[i] = "Spooky";
+		$("#spooky").prop("checked", true);
+		break;
 	case "Electric Surge":
 	case "Hadron Engine":
 		lastAutoTerrain[i] = "Electric";
@@ -423,6 +405,10 @@ function autosetTerrain(ability, i) {
 	case "Misty Surge":
 		lastAutoTerrain[i] = "Misty";
 		$("#misty").prop("checked", true);
+		break;
+	case "Pheromones": //eimpp custom, skittering/crawly terrain
+		lastAutoTerrain[i] = "Crawly";
+		$("#crawly").prop("checked", true);
 		break;
 	case "Psychic Surge":
 		lastAutoTerrain[i] = "Psychic";
@@ -799,6 +785,7 @@ function showFormes(formeObj, pokemonName, pokemon, baseFormeName) {
 function stellarButtonsVisibility(pokeObj, vis) {
 	var fullSetName = pokeObj.find("input.set-selector").val();
 	var pokemonName = fullSetName.substring(0, fullSetName.indexOf(" ("));
+	console.log(pokemonName);
 	var moveObjs = [
 		pokeObj.find(".move1"),
 		pokeObj.find(".move2"),
@@ -922,6 +909,7 @@ function correctHiddenPower(pokemon) {
 			// Otherwise, use the default preset hidden power IVs that PS would use
 			var hpIVs = calc.Stats.getHiddenPowerIVs(GENERATION, m[1]);
 			if (!hpIVs) continue; // some impossible type was specified, ignore
+
 			pokemon.ivs = pokemon.ivs || {hp: 31, at: 31, df: 31, sa: 31, sd: 31, sp: 31};
 			pokemon.dvs = pokemon.dvs || {hp: 15, at: 15, df: 15, sa: 15, sd: 15, sp: 15};
 			for (var stat in hpIVs) {
@@ -930,10 +918,10 @@ function correctHiddenPower(pokemon) {
 			}
 			if (gen < 3) {
 				pokemon.dvs.hp = calc.Stats.getHPDV({
-					atk: pokemon.ivs.at || 31,
-					def: pokemon.ivs.df || 31,
-					spe: pokemon.ivs.sp || 31,
-					spc: pokemon.ivs.sa || 31
+					atk: pokemon.ivs.at,
+					def: pokemon.ivs.df,
+					spe: pokemon.ivs.sp,
+					spc: pokemon.ivs.sa
 				});
 				pokemon.ivs.hp = calc.Stats.DVToIV(pokemon.dvs.hp);
 			}
@@ -1094,14 +1082,12 @@ function createField() {
 	var isGravity = $("#gravity").prop("checked");
 	var isSR = [$("#srL").prop("checked"), $("#srR").prop("checked")];
 	var weather;
-	var t2weather;
 	var spikes;
 	if (gen === 2) {
 		spikes = [$("#gscSpikesL").prop("checked") ? 1 : 0, $("#gscSpikesR").prop("checked") ? 1 : 0];
 		weather = $("input:radio[name='gscWeather']:checked").val();
 	} else {
 		weather = $("input:radio[name='weather']:checked").val();
-		t2weather = $("input:radio[name='t2weather']:checked").val();
 		spikes = [~~$("input:radio[name='spikesL']:checked").val(), ~~$("input:radio[name='spikesR']:checked").val()];
 	}
 	var steelsurge = [$("#steelsurgeL").prop("checked"), $("#steelsurgeR").prop("checked")];
@@ -1136,7 +1122,7 @@ function createField() {
 		});
 	};
 	return new calc.Field({
-		gameType: gameType, weather: weather, t2weather: t2weather, terrain: terrain,
+		gameType: gameType, weather: weather, terrain: terrain,
 		isMagicRoom: isMagicRoom, isWonderRoom: isWonderRoom, isGravity: isGravity,
 		isBeadsOfRuin: isBeadsOfRuin, isTabletsOfRuin: isTabletsOfRuin,
 		isSwordOfRuin: isSwordOfRuin, isVesselOfRuin: isVesselOfRuin,
@@ -1276,10 +1262,10 @@ $(".gen").change(function () {
 function getFirstValidSetOption() {
 	var sets = getSetOptions();
 	// NB: The first set is never valid, so we start searching after it.
-	/*for (var i = 1; i < sets.length; i++) {
-		if (sets[i].id && sets[i].id.indexOf('(Blank Set)') === -1) return sets[i];
-	}*/
-	return sets[1];
+	for (var i = 1; i < sets.length; i++) {
+		if (sets[i].id) return sets[i];
+	}
+	return undefined;
 }
 
 $(".notation").change(function () {

@@ -113,13 +113,13 @@ function displayDamageHits(damage) {
 	// Fixed Damage
 	if (typeof damage === 'number') return damage;
 	// Standard Damage
-	if (damage.length > 2) return damage.join(', ');
+	if (damage.length > 2) return damage[7];
 	// Fixed Parental Bond Damage
 	if (typeof damage[0] === 'number' && typeof damage[1] === 'number') {
 		return '1st Hit: ' + damage[0] + '; 2nd Hit: ' + damage[1];
 	}
 	// Parental Bond Damage
-	return '1st Hit: ' + damage[0].join(', ') + '; 2nd Hit: ' + damage[1].join(', ');
+	return '1st Hit: ' + damage[0][7] + '; 2nd Hit: ' + damage[1][7];
 }
 
 function findDamageResult(resultMoveObj) {
