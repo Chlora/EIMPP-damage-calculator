@@ -1831,7 +1831,7 @@ export function calculateFinalModsSMSSSV(
     desc.isAuroraVeil = true;
   }
 
-  if(defender.isGrounded && field.hasTerrain("Spooky")) {
+  if(isGrounded(defender, field) && field.hasTerrain("Spooky")) {
     desc.isAuroraVeil = false;
     desc.isReflect = false;
     desc.isLightScreen = false;
