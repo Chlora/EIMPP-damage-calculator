@@ -1831,12 +1831,6 @@ export function calculateFinalModsSMSSSV(
     desc.isAuroraVeil = true;
   }
 
-  if(isGrounded(defender, field) && field.hasTerrain("Spooky")) {
-    desc.isAuroraVeil = false;
-    desc.isReflect = false;
-    desc.isLightScreen = false;
-  }
-
   if (attacker.hasAbility('Neuroforce') && typeEffectiveness > 1) {
     finalMods.push(5120);
     desc.attackerAbility = attacker.ability;
