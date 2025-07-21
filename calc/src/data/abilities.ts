@@ -295,19 +295,21 @@ const SS = SM.concat([
 ]);
 
 const SV = SS.concat([
+  'Ambidextrous', //eimpp custom
   'Anger Shell',
-  'Aposematism', //eimpp custom
   'Armor Tail',
   'Beads of Ruin',
   'Commander',
   'Costar',
   'Cud Chew',
   'Earth Eater',
+  'Ectoplasmic Essence', //eimpp custom
   'Electromorphosis',
   'Embody Aspect (Cornerstone)',
   'Embody Aspect (Hearthflame)',
   'Embody Aspect (Teal)',
   'Embody Aspect (Wellspring)',
+  'Fetid Breath', //eimpp custom
   'Good as Gold',
   'Guard Dog',
   'Hadron Engine',
@@ -317,6 +319,7 @@ const SV = SS.concat([
   'Mycelium Might',
   'Opportunist',
   'Orichalcum Pulse',
+  'Pheromones', //eimpp custom
   'Photosynthesis', //eimpp custom
   'Poison Puppeteer',
   'Protosynthesis',
@@ -335,8 +338,10 @@ const SV = SS.concat([
   'Tera Shift',
   'Teraform Zero',
   'Thermal Exchange',
+  'Tight Crop', //eimpp custom
   'Toxic Chain',
   'Toxic Debris',
+  'Trigger Fingers', //eimpp custom
   'Vessel of Ruin',
   'Well-Baked Body',
   'Wind Power',

@@ -1850,7 +1850,7 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 77.4,
     abilities: {0: 'Sand Veil'},
   },
-  Cactain: {
+  Cactain: { //eimpp custom. credit to add original artist name here i forgor sorry
     types: ['Grass', 'Dark'],
     bs: {hp: 70, at: 110, df: 80, sa: 110, sd: 80, sp: 75},
     weightkg: 79,
@@ -2028,13 +2028,13 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 31.6,
     abilities: {0: 'Shield Dust'},
   },
-  Dustunny: {
+  Dustunny: { //eimpp custom
     types: ['Ghost', 'Normal'],
     bs: {hp: 55, at: 35, df: 75, sa: 20, sd: 80, sp: 30},
     weightkg: 0.7,
     abilities: {0: 'Fluffy'},
   },
-  Dustabbit: {
+  Dustabbit: { //eimpp custom
     types: ['Ghost', 'Normal'],
     bs: {hp: 85, at: 75, df: 95, sa: 30, sd: 105, sp: 45},
     weightkg: 8,
@@ -8142,6 +8142,12 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Healer'},
     nfe: true,
   },
+  Idroxotes: { //eimpp custom
+    types: ['Water', 'Steel'],
+    bs: {hp: 60, at: 98, df: 92, sa: 115, sd: 82, sp: 89},
+    weightkg: 10,
+    abilities: {0: 'Trigger Fingers'},
+  },
   Impidimp: {
     types: ['Dark', 'Fairy'],
     bs: {hp: 45, at: 45, df: 30, sa: 55, sd: 40, sp: 50},
@@ -9163,13 +9169,13 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 223,
     abilities: {0: 'Poison Point'},
   },
-  Pluviaptile: {
+  Pluviaptile: { //eimpp custom
     types: ['Water', 'Normal'],
     bs: {hp: 44, at: 20, df: 62, sa: 79, sd: 44, sp: 40},
     weightkg: 16,
     abilities: {0: 'Lightning Rod'},
   },
-  Pluvialisk: {
+  Pluvialisk: { //eimpp custom
     types: ['Water', 'Normal'],
     bs: {hp: 62, at: 43, df: 102, sa: 119, sd: 84, sp: 70},
     weightkg: 30,
@@ -9259,7 +9265,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Own Tempo'},
     nfe: true,
   },
-  'Fierce Vines': {
+  'Fierce Vines': { //eimpp custom
     types: ['Grass', 'Fighting'],
     bs: {hp: 75, at: 135, df: 111, sa: 79, sd: 79, sp: 91},
     weightkg: 25,
@@ -9300,6 +9306,18 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 4,
     gender: 'N',
     abilities: {0: 'Protosynthesis'},
+  },
+  Foetzin: { //eimpp custom
+    types: ['Flying', 'Poison'],
+    bs: {hp: 85, at: 91, df: 60, sa: 91, sd: 91, sp:62},
+    weightkg: 15,
+    abilities: {0: 'Stench'}
+  },
+  'Foetzin+Frigibax+Fuecoco': {
+    types: ['Flying', 'Poison'],
+    bs: {hp: 65, at: 75, df: 45, sa: 35, sd: 45, sp:55},
+    weightkg: 15,
+    abilities: {0: 'Thermal Exchange'},
   },
   Frigibax: {
     types: ['Dragon', 'Ice'],

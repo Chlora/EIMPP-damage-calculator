@@ -4910,8 +4910,8 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     isWind: true,
     target: 'allAdjacentFoes',
   },
-  'Barometric Crush':{
-    bp: 55,
+  'Barometric Crush':{ //eimpp custom
+    bp: 75,
     type: 'Flying',
     category: 'Physical',
     zp: 100,
@@ -4919,7 +4919,7 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     secondaries: true,
     isWind: true,
   },
-  'Meteor Shower':{
+  'Meteor Shower':{ //eimpp custom
     bp: 20,
     type: 'Rock',
     category: 'Special',
@@ -4935,7 +4935,7 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     zp: 150,
     target: 'allAdjacentFoes',
   },
-  'Climatostrike':{
+  'Climatostrike':{ //eimpp custom
     bp: 50,
     type: 'Normal',
     category: 'Physical',
@@ -4947,11 +4947,10 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     category: 'Status', 
     type: 'Poison',
   },
-  'Elytron Blow':{
-    bp: 55,
+  'Elytron Blow':{ //eimpp custom. fun fact: it used to be a wind move, not sure why
+    bp: 60,
     type: 'Bug',
-    category: 'Physical',
-    isWind: true,
+    category: 'Physical', 
     priority: 1,
   },
   'Nutsack Assault': {

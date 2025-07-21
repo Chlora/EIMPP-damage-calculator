@@ -16,7 +16,7 @@ export type StatusName = 'slp' | 'psn' | 'brn' | 'frz' | 'par' | 'tox';
 export type GameType = 'Singles' | 'Doubles';
 export type Terrain = 'Electric' | 'Grassy' | 'Psychic' | 'Misty' | 'Spooky' | 'Crawly';
 export type Weather = | 'Sand' | 'Sun' | 'Rain' | 'Hail' | 'Snow' | 'Acid Rain';
-export type T2Weather = 'T2clear' | 'Harsh Sunshine' | 'Heavy Rain' | 'Strong Winds' | 'Acid Downpour' | 'Permafrost' | 'Heavy Sandstorm';
+export type T2Weather = 'T2clear' | 'Harsh Sunshine' | 'Heavy Rain' | 'Strong Winds' | 'Acid Downpour' | 'Permafrost' | 'Heavy Sandstorm'; //eimpp custom, unused
 
 export type NatureName =
   'Adamant' | 'Bashful' | 'Bold' | 'Brave' | 'Calm' |
