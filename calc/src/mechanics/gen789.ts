@@ -116,10 +116,10 @@ export function calculateSMSSSV(
     'Neutralizing Gas',
     'Prism Armor',
     'Shadow Shield'
-  ) || (field.hasT2Weather('Acid Downpour') && !attacker.hasType('Poison') && !attacker.hasAbility('Poison Heal') && !attacker.hasAbility('Liquid Ooze'));
+  ) || (field.hasWeather('Acid Rain') && !attacker.hasType('Poison') && !attacker.hasAbility('Poison Heal') && !attacker.hasAbility('Liquid Ooze')); //replace w hast2Weather and Acid Downpour if it breaks, okk
 
   const attackerIgnoresAbility = (attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze')) || 
-  (!defender.hasType('Poison') && !defender.hasAbility('Liquid Ooze') && !defender.hasAbility('Poison Heal') && field.hasT2Weather('Acid Downpour'));
+  (!defender.hasType('Poison') && !defender.hasAbility('Liquid Ooze') && !defender.hasAbility('Poison Heal') && field.hasWeather('Acid Rain'));
 
   const moveIgnoresAbility = move.named(
     'G-Max Drum Solo',
@@ -344,9 +344,9 @@ export function calculateSMSSSV(
     typeEffectiveness = 1;
   }
 
-  if(typeEffectiveness === 0 && isGrounded(defender, field) && field.hasTerrain('Spooky') && ((move.hasType('Normal') || move.hasType('Ghost')))) {
+  if(typeEffectiveness === 0 && isGrounded(defender, field) && field.hasTerrain('Spooky') && ((move.hasType('Normal') || move.hasType('Ghost') || move.hasType('Fighting')))) {
     desc.terrain = field.terrain;
-    typeEffectiveness = 1;
+    typeEffectiveness = 1; //eimpp custom. ghosts, fightings, and normals can now hit each other.
   }
 
   if(typeEffectiveness === 0 && move.hasType('Poison')){
@@ -849,22 +849,25 @@ export function calculateBasePowerSMSSSV(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * (((field.weather && field.hasT2Weather('T2clear')) 
-    || (field.hasT2Weather('Acid Downpour', 'Harsh Sunshine', 'Heavy Rain', 'Heavy Sandstorm', 'Permafrost', 'Strong Winds')) 
-    || field.attackerSide.isTailwind) ? 2 : 1);
+    basePower = move.bp * (field.weather && !field.hasT2Weather('Strong Winds') ? 2 : 1); //eimpp custom code. issue: strong winds do not work like in vanilla. fix, LOL
+   // || (field.hasT2Weather('Acid Downpour', 'Harsh Sunshine', 'Heavy Rain', 'Heavy Sandstorm', 'Permafrost', 'Strong Winds')) 
+   // || field.attackerSide.isTailwind) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand')) && attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
     break;
   case 'Climatostrike':
-    basePower = move.bp * (((field.weather && field.hasT2Weather('T2clear')) 
-    || (field.hasT2Weather('Acid Downpour', 'Harsh Sunshine', 'Heavy Rain', 'Heavy Sandstorm', 'Permafrost', 'Strong Winds')) 
-    || field.attackerSide.isTailwind) ? 2 : 1);
+    basePower = move.bp * (field.weather && !field.hasT2Weather('Strong Winds') ? 2 : 1); //eimpp custom code. issue: strong winds do not work like in vanilla. fix, LOL
+   // || (field.hasT2Weather('Acid Downpour', 'Harsh Sunshine', 'Heavy Rain', 'Heavy Sandstorm', 'Permafrost', 'Strong Winds')) 
+   // || field.attackerSide.isTailwind) ? 2 : 1);
     if ((field.hasWeather('Sun', 'Rain',  'Hail', 'Snow',  'Acid Rain',  'Sand')) && attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
-  break;
+    break;
     case 'Barometric Crush':
-      basePower = move.bp * ((field.attackerSide.isTailwind || field.hasT2Weather('Strong Winds')) ? 1.3 : 1);
-      break;
+    basePower = move.bp * 1 // eimpp custom... again... im sorry. this line makes no sense, but if i do not have it, something breaks and i dont know how to fix it.
+    if (field.attackerSide.isTailwind) { //eimpp custom
+    basePower = move.bp * 1.5;
+}
+    break; 
   case 'Terrain Pulse':
     basePower = move.bp * (isGrounded(attacker, field) && field.terrain ? 2 : 1);
     desc.moveBP = basePower;
@@ -1064,8 +1067,8 @@ export function calculateBPModsSMSSSV(
     bpMods.push(6144);
     desc.moveBP = basePower * 1.5;
   } 
-  else if(move.priority > 0 && isGrounded(attacker, field) && field.hasTerrain('Crawly')){
-    bpMods.push(5120);
+  else if(move.priority > 0 && isGrounded(attacker, field) && field.hasTerrain('Crawly')){ //eimpp custom. this code makes priority moves deal 50% more damage. in theory, these moves should hit twice, with the second hit dealing 50% damage. but idk how to code that -lamp
+    bpMods.push(6144);
   }
   else if (
     move.named('Tera Starstorm') && attacker.name === 'Terapagos-Stellar'
@@ -1128,10 +1131,22 @@ export function calculateBPModsSMSSSV(
       bpMods.push(terrainMultiplier);
       desc.terrain = field.terrain;
     }
-    if(field.hasTerrain('Spooky') && move.hasType('Ghost')){
-      bpMods.push(5325);
+    //if(field.hasTerrain('Spooky') && move.hasType('Ghost')){ //eimpp custom. this should make ghost type moves stronger in spooky terrain, but we scrapped it. so this line is currently unused.
+    //  bpMods.push(5325);
     }
-  }
+
+   // if (isGrounded(defender,field)) {
+   //   if (field.hasTerrain('Spooky') && move.hasType('Ghost'))
+    //{
+     // if ((field.defenderSide.isReflect && move.category === 'Physical') ||
+     // (field.defenderSide.isLightScreen && move.category === 'Special') ||
+      //(field.defenderSide.isAuroraVeil))
+
+    //{
+     // bpMods.push(5447);
+    //} 
+   // }
+  //}
   if (isGrounded(defender, field)) {
     if ((field.hasTerrain('Misty') && move.hasType('Dragon')) ||
         (field.hasTerrain('Grassy') && move.named('Bulldoze', 'Earthquake'))
@@ -1162,7 +1177,11 @@ export function calculateBPModsSMSSSV(
     bpMods.push(6144);
     desc.attackerAbility = attacker.ability;
   }
+  if ((attacker.hasAbility('Trigger Fingers') && (move.hits > 1))) { //eimpp custom. Trigger Fingers boosts multihit moves by 20%.
 
+      bpMods.push(4915);
+
+  }
   const aura = `${move.type} Aura`;
   const isAttackerAura = attacker.hasAbility(aura);
   const isDefenderAura = defender.hasAbility(aura);
@@ -1698,11 +1717,9 @@ function calculateBaseDamageSMSSSV(
   }*/
   if(move.named('Elytron Blow')){
     if(field.hasT2Weather('Strong Winds')){
-      baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
+      baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
       desc.t2weather = field.t2weather;
-    } else if(field.attackerSide.isTailwind){
-      baseDamage = pokeRound(OF32(baseDamage * 5325) / 4096);
-    }
+    } 
   }
   if (
     (field.hasWeather('Sun') || field.hasT2Weather('Harsh Sunshine')) && move.named('Hydro Steam') && !attacker.hasItem('Utility Umbrella')
