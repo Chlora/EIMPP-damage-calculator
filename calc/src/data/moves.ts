@@ -1,5 +1,5 @@
-import * as I from '../data/interface';
-import {toID, DeepPartial, assignWithout, extend} from '../util';
+import type * as I from '../data/interface';
+import {type DeepPartial, toID, assignWithout, extend} from '../util';
 
 export interface MoveData {
   readonly name?: string;
@@ -26,6 +26,7 @@ export interface MoveData {
   readonly isZ?: boolean;
   readonly isMax?: boolean;
   readonly multihit?: number | number[];
+  readonly multiaccuracy?: boolean;
 
   readonly bp: number;
   readonly zp?: number;
@@ -377,7 +378,7 @@ const ADV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
   Surf: {target: 'allAdjacentFoes'},
   Thief: {makesContact: true},
   Thrash: {makesContact: true},
-  'Triple Kick': {makesContact: true, multihit: 3},
+  'Triple Kick': {makesContact: true, multihit: 3, multiaccuracy: true},
   'Vine Whip': {makesContact: true},
   Waterfall: {makesContact: true},
   Wrap: {makesContact: true},
@@ -953,7 +954,7 @@ const DPP_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     makesContact: true,
     category: 'Special',
   },
-  'Air Slash': {bp: 75, type: 'Flying', category: 'Special', isWind: true,},
+  'Air Slash': {bp: 75, type: 'Flying', category: 'Special'},
   'Aura Sphere': {bp: 90, type: 'Fighting', category: 'Special'},
   'Bug Buzz': {bp: 90, type: 'Bug', isSound: true, category: 'Special'},
   'Draco Meteor': {bp: 140, type: 'Dragon', self: {boosts: {spa: -2}}, category: 'Special'},
@@ -3605,6 +3606,7 @@ const SS_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     category: 'Physical',
     makesContact: true,
     multihit: 3,
+    multiaccuracy: true,
     zp: 120,
     maxPower: 140,
   },
@@ -4200,7 +4202,6 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     maxPower: 130,
     secondaries: true,
     isSound: true,
-    makesContact: true,
   },
   'Aqua Step': {
     bp: 80,
@@ -4372,6 +4373,7 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     category: 'Special',
     zp: 195,
     maxPower: 140,
+    // Sheer Force boost implemented in gen789.ts
   },
   'Esper Wing': {
     bp: 80,
@@ -4481,7 +4483,6 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     makesContact: true,
     isPunch: true,
     priority: 1,
-    // Sheer Force boost implemented in gen789.ts
   },
   'Kowtow Cleave': {
     bp: 85,
@@ -4599,14 +4600,14 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     isPulse: true,
     // Sheer Force boost implemented in gen789.ts
   },
-  'Psychic Noise': {
+  'Polar Flare': {
     bp: 75,
-    type: 'Psychic',
+    type: 'Fire',
     category: 'Special',
     zp: 140,
     maxPower: 130,
     secondaries: true,
-    isSound: true,
+    target: 'allAdjacentFoes',
   },
   'Population Bomb': {
     bp: 20,
@@ -4617,6 +4618,7 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     makesContact: true,
     isSlicing: true,
     multihit: 10,
+    multiaccuracy: true,
   },
   Pounce: {
     bp: 50,
@@ -4631,6 +4633,15 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     bp: 0,
     type: 'Normal',
     category: 'Status',
+  },
+  'Psychic Noise': {
+    bp: 75,
+    type: 'Psychic',
+    category: 'Special',
+    zp: 140,
+    maxPower: 130,
+    secondaries: true,
+    isSound: true,
   },
   Psyblade: {
     bp: 80,
@@ -4910,64 +4921,6 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     isWind: true,
     target: 'allAdjacentFoes',
   },
-  'Barometric Crush':{ //eimpp custom
-    bp: 75,
-    type: 'Flying',
-    category: 'Physical',
-    zp: 100,
-    maxPower : 100,
-    secondaries: true,
-    isWind: true,
-  },
-  'Meteor Shower':{ //eimpp custom
-    bp: 20,
-    type: 'Rock',
-    category: 'Special',
-    zp: 120,
-    maxPower: 120,
-    multihit: [2, 5],
-  },
-  'Cryonic Burst':{
-    bp: 150,
-    type: 'Ice',
-    category: 'Special',
-    maxPower: 150,
-    zp: 150,
-    target: 'allAdjacentFoes',
-  },
-  'Climatostrike':{ //eimpp custom
-    bp: 50,
-    type: 'Normal',
-    category: 'Physical',
-    zp: 120,
-    maxPower: 120,
-  },
-  'Acid Rain': {
-    bp: 0, 
-    category: 'Status', 
-    type: 'Poison',
-  },
-  'Elytron Blow':{ //eimpp custom. fun fact: it used to be a wind move, not sure why
-    bp: 60,
-    type: 'Bug',
-    category: 'Physical', 
-    priority: 1,
-  },
-  'Nutsack Assault': {
-    bp: 100,
-    type: 'Dark',
-    category: 'Physical',
-    zp: 180,
-    maxPower: 130,
-    makesContact: true,
-    target: 'allAdjacentFoes',
-  },
-  'Spike Shot': {
-    bp: 80,
-    type: 'Grass',
-    category: 'Physical',
-    drain: [1, 2],
-  },
 };
 
 const SV: {[name: string]: MoveData} = extend(true, {}, SS, SV_PATCH);
@@ -5027,6 +4980,7 @@ class Move implements I.Move {
   readonly zp?: number;
   readonly maxPower?: number;
   readonly multihit?: number | number[];
+  readonly multiaccuracy?: boolean;
 
   private static readonly FLAGS = new Set([
     'bp',

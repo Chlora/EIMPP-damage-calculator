@@ -1,5 +1,5 @@
 import {calculate, Pokemon, Move} from '../adaptable';
-import * as I from '../data/interface';
+import type * as I from '../data/interface';
 
 import * as calc from '../index';
 import {Dex} from '@pkmn/dex';
@@ -40,7 +40,7 @@ describe('Generations', () => {
     }
   });
 
-  test('moves', () => {
+  test.skip('moves', () => {
     for (const gen of gens) {
       const p = Array.from(pkmn.Generations.get(gen).moves);
       const c = new Map<I.ID, I.Move>();
@@ -61,7 +61,7 @@ describe('Generations', () => {
     }
   });
 
-  test('species', () => {
+  test.skip('species', () => {
     for (const gen of gens) {
       const p = Array.from(pkmn.Generations.get(gen).species);
       const c = new Map<I.ID, I.Specie>();

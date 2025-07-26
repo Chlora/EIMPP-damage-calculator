@@ -1,5 +1,5 @@
-﻿import * as I from './interface';
-import {toID, extend, DeepPartial, assignWithout} from '../util';
+import type * as I from './interface';
+import {type DeepPartial, toID, extend, assignWithout} from '../util';
 
 export interface SpeciesData {
   readonly types: [I.TypeName] | [I.TypeName, I.TypeName];
@@ -1850,12 +1850,6 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 77.4,
     abilities: {0: 'Sand Veil'},
   },
-  Cactain: { //eimpp custom. credit to add original artist name here i forgor sorry
-    types: ['Grass', 'Dark'],
-    bs: {hp: 70, at: 110, df: 80, sa: 110, sd: 80, sp: 75},
-    weightkg: 79,
-    abilities: {0: 'Water Absorb'},
-  },
   Camerupt: {
     types: ['Fire', 'Ground'],
     bs: {hp: 70, at: 100, df: 70, sa: 105, sd: 75, sp: 40},
@@ -1881,7 +1875,7 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 70, at: 70, df: 70, sa: 70, sd: 70, sp: 70},
     weightkg: 0.8,
     abilities: {0: 'Forecast'},
-    otherFormes: ['Castform-Rainy', 'Castform-Snowy', 'Castform-Sunny', 'Castform-Noxious', 'Castform-Sandy', 'Castform-Fluttery'],
+    otherFormes: ['Castform-Rainy', 'Castform-Snowy', 'Castform-Sunny'],
   },
   'Castform-Rainy': {
     types: ['Water'],
@@ -1899,27 +1893,6 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Castform-Sunny': {
     types: ['Fire'],
-    bs: {hp: 70, at: 70, df: 70, sa: 70, sd: 70, sp: 70},
-    weightkg: 0.8,
-    abilities: {0: 'Forecast'},
-    baseSpecies: 'Castform',
-  },
-  'Castform-Sandy': {
-    types: ['Rock'],
-    bs: {hp: 70, at: 70, df: 70, sa: 70, sd: 70, sp: 70},
-    weightkg: 0.8,
-    abilities: {0: 'Forecast'},
-    baseSpecies: 'Castform',
-  },
-  'Castform-Noxious': {
-    types: ['Poison'],
-    bs: {hp: 70, at: 70, df: 70, sa: 70, sd: 70, sp: 70},
-    weightkg: 0.8,
-    abilities: {0: 'Forecast'},
-    baseSpecies: 'Castform',
-  },
-  'Castform-Fluttery': {
-    types: ['Flying'],
     bs: {hp: 70, at: 70, df: 70, sa: 70, sd: 70, sp: 70},
     weightkg: 0.8,
     abilities: {0: 'Forecast'},
@@ -2027,18 +2000,6 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 60, at: 50, df: 70, sa: 50, sd: 90, sp: 65},
     weightkg: 31.6,
     abilities: {0: 'Shield Dust'},
-  },
-  Dustunny: { //eimpp custom
-    types: ['Ghost', 'Normal'],
-    bs: {hp: 55, at: 35, df: 75, sa: 20, sd: 80, sp: 30},
-    weightkg: 0.7,
-    abilities: {0: 'Fluffy'},
-  },
-  Dustabbit: { //eimpp custom
-    types: ['Ghost', 'Normal'],
-    bs: {hp: 85, at: 75, df: 95, sa: 30, sd: 105, sp: 45},
-    weightkg: 8,
-    abilities: {0: 'Fluffy'},
   },
   Electrike: {
     types: ['Electric'],
@@ -7077,7 +7038,16 @@ const SM_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 45, at: 65, df: 40, sa: 30, sd: 40, sp: 60},
     weightkg: 9.2,
     nfe: true,
+    otherFormes: ['Rockruff-Dusk'],
     abilities: {0: 'Keen Eye'},
+  },
+  'Rockruff-Dusk': {
+    types: ['Rock'],
+    bs: {hp: 45, at: 65, df: 40, sa: 30, sd: 40, sp: 60},
+    weightkg: 9.2,
+    nfe: true,
+    abilities: {0: 'Own Tempo'},
+    baseSpecies: 'Rockruff',
   },
   Rowlet: {
     types: ['Grass', 'Flying'],
@@ -8142,12 +8112,6 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Healer'},
     nfe: true,
   },
-  Idroxotes: { //eimpp custom
-    types: ['Water', 'Steel'],
-    bs: {hp: 60, at: 98, df: 92, sa: 115, sd: 82, sp: 89},
-    weightkg: 10,
-    abilities: {0: 'Trigger Fingers'},
-  },
   Impidimp: {
     types: ['Dark', 'Fairy'],
     bs: {hp: 45, at: 45, df: 30, sa: 55, sd: 40, sp: 50},
@@ -9033,6 +8997,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Dunsparce: {nfe: true},
   Duraludon: {nfe: true},
   Girafarig: {nfe: true},
+  Kitsunoh: {bs: {at: 117, sp: 128}},
   Primeape: {nfe: true},
   Tauros: {otherFormes: ['Tauros-Paldea-Aqua', 'Tauros-Paldea-Blaze', 'Tauros-Paldea-Combat']},
   Wooper: {otherFormes: ['Wooper-Paldea']},
@@ -9040,13 +9005,13 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   'Zacian-Crowned': {bs: {at: 150}},
   Zamazenta: {bs: {at: 120}},
   'Zamazenta-Crowned': {bs: {at: 120, df: 140, sd: 140}},
-  /*Ababo: {
+  Ababo: {
     types: ['Fairy'],
     bs: {hp: 42, at: 35, df: 27, sa: 35, sd: 35, sp: 38},
     weightkg: 3.5,
     abilities: {0: 'Pixilate'},
     nfe: true,
-  },*/
+  },
   Annihilape: {
     types: ['Fighting', 'Ghost'],
     bs: {hp: 110, at: 115, df: 80, sa: 50, sd: 90, sp: 90},
@@ -9163,27 +9128,28 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     gender: 'N',
     abilities: {0: 'Sword of Ruin'},
   },
+  Chuggon: {
+    types: ['Dragon', 'Poison'],
+    bs: {hp: 30, at: 23, df: 77, sa: 55, sd: 65, sp: 30},
+    weightkg: 50,
+    abilities: {0: 'Shell Armor'},
+    nfe: true,
+  },
+  Chuggalong: {
+    types: ['Dragon', 'Poison'],
+    bs: {hp: 45, at: 43, df: 117, sa: 120, sd: 110, sp: 108},
+    weightkg: 201.6,
+    abilities: {0: 'Armor Tail'},
+  },
   Clodsire: {
     types: ['Poison', 'Ground'],
     bs: {hp: 130, at: 75, df: 60, sa: 45, sd: 100, sp: 20},
     weightkg: 223,
     abilities: {0: 'Poison Point'},
   },
-  Pluviaptile: { //eimpp custom
-    types: ['Water', 'Normal'],
-    bs: {hp: 44, at: 20, df: 62, sa: 79, sd: 44, sp: 40},
-    weightkg: 16,
-    abilities: {0: 'Lightning Rod'},
-  },
-  Pluvialisk: { //eimpp custom
-    types: ['Water', 'Normal'],
-    bs: {hp: 62, at: 43, df: 102, sa: 119, sd: 84, sp: 70},
-    weightkg: 30,
-    abilities: {0: 'Lightning Rod'},
-  },
   Cresceidon: {
     types: ['Water', 'Fairy'],
-    bs: {hp: 80, at: 32, df: 111, sa: 88, sd: 99, sp: 125},
+    bs: {hp: 80, at: 32, df: 111, sa: 88, sd: 99, sp: 124},
     weightkg: 999.9,
     abilities: {0: 'Multiscale'},
   },
@@ -9226,6 +9192,13 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 220,
     abilities: {0: 'Unaware'},
   },
+  Draggalong: {
+    types: ['Dragon', 'Poison'],
+    bs: {hp: 40, at: 33, df: 92, sa: 95, sd: 80, sp: 85},
+    weightkg: 110,
+    abilities: {0: 'Armor Tail'},
+    nfe: true,
+  },
   Dudunsparce: {
     types: ['Normal'],
     bs: {hp: 125, at: 100, df: 80, sa: 85, sd: 75, sp: 55},
@@ -9265,14 +9238,6 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Own Tempo'},
     nfe: true,
   },
-  'Fierce Vines': { //eimpp custom
-    types: ['Grass', 'Fighting'],
-    bs: {hp: 75, at: 135, df: 111, sa: 79, sd: 79, sp: 91},
-    weightkg: 25,
-    abilities: {0: 'Protosynthesis'},
-    gender : 'N',
-    nfe: true,
-  },
   Finizen: {
     types: ['Water'],
     bs: {hp: 70, at: 45, df: 40, sa: 45, sd: 40, sp: 75},
@@ -9306,18 +9271,6 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 4,
     gender: 'N',
     abilities: {0: 'Protosynthesis'},
-  },
-  Foetzin: { //eimpp custom
-    types: ['Flying', 'Poison'],
-    bs: {hp: 85, at: 91, df: 60, sa: 91, sd: 91, sp:62},
-    weightkg: 15,
-    abilities: {0: 'Stench'}
-  },
-  'Foetzin+Frigibax+Fuecoco': {
-    types: ['Flying', 'Poison'],
-    bs: {hp: 65, at: 75, df: 45, sa: 35, sd: 45, sp:55},
-    weightkg: 15,
-    abilities: {0: 'Thermal Exchange'},
   },
   Frigibax: {
     types: ['Dragon', 'Ice'],
@@ -9779,6 +9732,22 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     gender: 'N',
     abilities: {0: 'Protosynthesis'},
   },
+  Ramnarok: {
+    types: ['Fire', 'Steel'],
+    bs: {hp: 110, at: 63, df: 104, sa: 104, sd: 134, sp: 85},
+    weightkg: 250,
+    abilities: {0: 'No Guard'},
+    otherFormes: ['Ramnarok-Radiant'],
+    gender: 'N',
+  },
+  'Ramnarok-Radiant': {
+    types: ['Fire', 'Ice'],
+    bs: {hp: 110, at: 63, df: 85, sa: 134, sd: 54, sp: 154},
+    weightkg: 182,
+    abilities: {0: 'No Guard'},
+    baseSpecies: 'Ramnarok',
+    gender: 'N',
+  },
   Rellor: {
     types: ['Bug'],
     bs: {hp: 41, at: 50, df: 60, sa: 31, sd: 58, sp: 30},
@@ -9825,6 +9794,12 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 8,
     gender: 'N',
     abilities: {0: 'Protosynthesis'},
+  },
+  Shox: {
+    types: ['Electric', 'Normal'],
+    bs: {hp: 136, at: 55, df: 87, sa: 108, sd: 108, sp: 56},
+    weightkg: 99.9,
+    abilities: {0: 'Electromorphosis'},
   },
   Shroodle: {
     types: ['Poison', 'Normal'],

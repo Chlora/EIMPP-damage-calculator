@@ -1,10 +1,9 @@
-import {State} from './state';
-import {GameType, Weather, T2Weather, Terrain} from './data/interface';
+import type {State} from './state';
+import type {GameType, Weather, Terrain} from './data/interface';
 
 export class Field implements State.Field {
   gameType: GameType;
   weather?: Weather;
-  t2weather?: T2Weather;
   terrain?: Terrain;
   isMagicRoom: boolean;
   isWonderRoom: boolean;
@@ -23,7 +22,6 @@ export class Field implements State.Field {
     this.gameType = field.gameType || 'Singles';
     this.terrain = field.terrain;
     this.weather = field.weather;
-    this.t2weather = field.t2weather;
     this.isMagicRoom = !!field.isMagicRoom;
     this.isWonderRoom = !!field.isWonderRoom;
     this.isGravity = !!field.isGravity;
@@ -43,10 +41,6 @@ export class Field implements State.Field {
     return !!(this.weather && weathers.includes(this.weather));
   }
 
-  hasT2Weather(...t2weathers: T2Weather[]) {
-    return !!(this.t2weather && t2weathers.includes(this.t2weather));
-  }
-
   hasTerrain(...terrains: Terrain[]) {
     return !!(this.terrain && terrains.includes(this.terrain));
   }
@@ -60,7 +54,6 @@ export class Field implements State.Field {
     return new Field({
       gameType: this.gameType,
       weather: this.weather,
-      t2weather: this.t2weather,
       terrain: this.terrain,
       isMagicRoom: this.isMagicRoom,
       isWonderRoom: this.isWonderRoom,
@@ -90,6 +83,7 @@ export class Side implements State.Side {
   isLightScreen: boolean;
   isProtected: boolean;
   isSeeded: boolean;
+  isSaltCured: boolean;
   isForesight: boolean;
   isTailwind: boolean;
   isHelpingHand: boolean;
@@ -98,6 +92,7 @@ export class Side implements State.Side {
   isAuroraVeil: boolean;
   isBattery: boolean;
   isPowerSpot: boolean;
+  isSteelySpirit: boolean;
   isSwitching?: 'out' | 'in';
 
   constructor(side: State.Side = {}) {
@@ -112,6 +107,7 @@ export class Side implements State.Side {
     this.isLightScreen = !!side.isLightScreen;
     this.isProtected = !!side.isProtected;
     this.isSeeded = !!side.isSeeded;
+    this.isSaltCured = !!side.isSaltCured;
     this.isForesight = !!side.isForesight;
     this.isTailwind = !!side.isTailwind;
     this.isHelpingHand = !!side.isHelpingHand;
@@ -120,6 +116,7 @@ export class Side implements State.Side {
     this.isAuroraVeil = !!side.isAuroraVeil;
     this.isBattery = !!side.isBattery;
     this.isPowerSpot = !!side.isPowerSpot;
+    this.isSteelySpirit = !!side.isSteelySpirit;
     this.isSwitching = side.isSwitching;
   }
 
