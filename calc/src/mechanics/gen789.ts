@@ -179,7 +179,8 @@ export function calculateSMSSSV(
     'Wonder Skin'
   );
 
-  const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze') || (attacker.hasType('Poison') && field.hasWeather('Acid Rain'));
+  const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze') 
+  || (attacker.hasType('Poison') && field.hasWeather('Acid Rain'));
   const moveIgnoresAbility = move.named(
     'G-Max Drum Solo',
     'G-Max Fire Ball',
@@ -321,7 +322,8 @@ export function calculateSMSSSV(
   ) {
     move.target = 'allAdjacentFoes';
     type = 'Stellar';
-  } else if ((move.named('Brick Break', 'Psychic Fangs') || (move.hasType('Ghost') && field.hasTerrain('Spooky')))) {
+  } else if ((move.named('Brick Break', 'Psychic Fangs') 
+    || (move.hasType('Ghost') && field.hasTerrain('Spooky')))) {
     field.defenderSide.isReflect = false;
     field.defenderSide.isLightScreen = false;
     field.defenderSide.isAuroraVeil = false;
