@@ -179,7 +179,7 @@ export function calculateSMSSSV(
     'Wonder Skin'
   );
 
-  const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze');
+  const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze') || (attacker.hasType('Poison') && field.hasWeather('Acid Rain'));
   const moveIgnoresAbility = move.named(
     'G-Max Drum Solo',
     'G-Max Fire Ball',
@@ -242,6 +242,7 @@ export function calculateSMSSSV(
       : field.hasWeather('Rain', 'Heavy Rain') && !holdingUmbrella ? 'Water'
       : field.hasWeather('Sand') ? 'Rock'
       : field.hasWeather('Hail', 'Snow') ? 'Ice'
+      : field.hasWeather('Acid Rain') && !holdingUmbrella ? 'Poison'
       : 'Normal';
     desc.weather = field.weather;
     desc.moveType = type;
@@ -320,7 +321,7 @@ export function calculateSMSSSV(
   ) {
     move.target = 'allAdjacentFoes';
     type = 'Stellar';
-  } else if (move.named('Brick Break', 'Psychic Fangs')) {
+  } else if ((move.named('Brick Break', 'Psychic Fangs') || (move.hasType('Ghost') && field.hasTerrain('Spooky')))) {
     field.defenderSide.isReflect = false;
     field.defenderSide.isLightScreen = false;
     field.defenderSide.isAuroraVeil = false;
@@ -429,7 +430,11 @@ export function calculateSMSSSV(
   }
 
   if (typeEffectiveness === 0) {
-    return result;
+    if (field.hasTerrain('Spooky') && move.hasType('Normal', 'Fighting', 'Ghost')) {
+      typeEffectiveness = 1;
+    } else {
+      return result;
+    }
   }
 
   if ((move.named('Sky Drop') &&
@@ -870,7 +875,7 @@ export function calculateBasePowerSMSSSV(
     break;
   case 'Weather Ball':
     basePower = move.bp * (field.weather && !field.hasWeather('Strong Winds') ? 2 : 1);
-    if (field.hasWeather('Sun', 'Harsh Sunshine', 'Rain', 'Heavy Rain') &&
+    if (field.hasWeather('Sun', 'Harsh Sunshine', 'Rain', 'Heavy Rain', 'Acid Rain') &&
       attacker.hasItem('Utility Umbrella')) basePower = move.bp;
     desc.moveBP = basePower;
     break;
@@ -1093,7 +1098,7 @@ export function calculateBPModsSMSSSV(
     bpMods.push(6144);
     desc.moveBP = basePower * 1.5;
   } else if (move.named('Solar Beam', 'Solar Blade') &&
-      field.hasWeather('Rain', 'Heavy Rain', 'Sand', 'Hail', 'Snow')) {
+      field.hasWeather('Rain', 'Heavy Rain', 'Sand', 'Hail', 'Snow', 'Acid Rain')) {
     bpMods.push(2048);
     desc.moveBP = basePower / 2;
     desc.weather = field.weather;
