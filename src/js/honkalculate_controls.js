@@ -109,7 +109,7 @@ function performCalculations() {
 							data.pop();
 						}
 						data.push(attacker.moves[n].name.replace("Hidden Power", "HP"));
-						data.push(minPercentage +  "%");
+						data.push(minPercentage + " - " + maxPercentage + "%");
 						data.push(minPixels + " - " + maxPixels + "px");
 						data.push(attacker.moves[n].bp === 0 ? 'nice move' : (result.kochance(false).text || 'possibly the worst move ever'));
 					}
@@ -242,16 +242,21 @@ $(".mode").change(function () {
 		var params = new URLSearchParams(window.location.search);
 		params.delete('mode');
 		params = '' + params;
-		window.location.replace('index' + linkExtension + (params.length ? '?' + params : ''));
+		window.location.replace('index.html' + (params.length ? '?' + params : ''));
 	} else if ($("#randoms").prop("checked")) {
 		var params = new URLSearchParams(window.location.search);
 		params.delete('mode');
 		params = '' + params;
-		window.location.replace('randoms' + linkExtension + (params.length ? '?' + params : ''));
+		window.location.replace('randoms.html' + (params.length ? '?' + params : ''));
+	} else if ($("#oms").prop("checked")) {
+		var params = new URLSearchParams(window.location.search);
+		params.delete('mode');
+		params = '' + params;
+		window.location.replace('oms.html' + (params.length ? '?' + params : ''));
 	} else {
 		var params = new URLSearchParams(window.location.search);
 		params.set('mode', $(this).attr("id"));
-		window.location.replace('honkalculate' + linkExtension + '?' + params);
+		window.location.replace('honkalculate.html?' + params);
 	}
 });
 
@@ -314,9 +319,9 @@ $(document).ready(function () {
 	window.mode = params.get("mode");
 	if (window.mode) {
 		if (window.mode === "randoms") {
-			window.location.replace("randoms" + linkExtension + "?" + params);
+			window.location.replace('randoms.html?' + params);
 		} else if (window.mode !== "one-vs-all" && window.mode !== "all-vs-one") {
-			window.location.replace("index" + linkExtension + "?" + params);
+			window.location.replace('index.html?' + params);
 		}
 	} else {
 		window.mode = "one-vs-all";
@@ -337,10 +342,10 @@ function calcDTDimensions() {
 	});
 
 	var theadBottomOffset = getBottomOffset($(".sorting"));
-	var heightUnderDT = getBottomOffset($(".holder-0")) - getBottomOffset($("#holder-2 tbody"));
+	var heightUnderDT = getBottomOffset($("#holder-0")) - getBottomOffset($("#holder-2 tbody"));
 	dtHeight = $(document).height() - theadBottomOffset - heightUnderDT;
 	dtWidth = $(window).width() - $("#holder-2").offset().left;
-	dtWidth -= 2 * parseFloat($(".holder-0").css("padding-right"));
+	dtWidth -= 2 * parseFloat($("#holder-0").css("padding-right"));
 }
 
 function getBottomOffset(obj) {
