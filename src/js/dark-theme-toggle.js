@@ -13,16 +13,14 @@
 * It will be truey and incorrectly cause the
 * dark theme to load.
 */
-var prefersDarkTheme = localStorage.getItem('darkTheme') || '';
+var prefersDarkTheme = localStorage.getItem('darkTheme') ? localStorage.getItem('darkTheme') === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
 var darkThemeButton = document.getElementById('dark-theme-toggle');
-darkThemeButton.value = prefersDarkTheme;
-updateTheme();
-
-function updateTheme() {
-	var isDark = prefersDarkTheme ? prefersDarkTheme === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-
+darkThemeButton.innerText = prefersDarkTheme ? 'Click for Light Theme' : 'Click for Dark Theme';
+if (prefersDarkTheme) {
 	var darkStyles = document.getElementById('dark-theme-styles');
-	darkStyles.disabled = !isDark;
+	if (darkStyles.disabled) {
+		darkStyles.disabled = !darkStyles.disabled;
+	}
 }
 
 /*
@@ -30,11 +28,13 @@ function updateTheme() {
 * Doesn't use jQuery, probably could with some modification
 */
 function toggleTheme() {
-	prefersDarkTheme = document.getElementById('dark-theme-toggle').value;
-	updateTheme();
+	prefersDarkTheme = !prefersDarkTheme;
+
+	var darkStyles = document.getElementById('dark-theme-styles');
+	darkStyles.disabled = !darkStyles.disabled;
 
 	localStorage.setItem('darkTheme', prefersDarkTheme);
+	darkThemeButton.innerText = prefersDarkTheme ? 'Click for Light Theme' : 'Click for Dark Theme';
 }
 
-darkThemeButton.addEventListener('change', toggleTheme);
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
+darkThemeButton.addEventListener('click', toggleTheme);

@@ -1,8 +1,3 @@
-var PC_HANDLER = function () {
-	setTimeout(performCalculations, 0);
-};
-var damageResults;
-
 $("#p2 .ability").bind("keyup change", function () {
 	autosetWeather($(this).val(), 1);
 	autosetTerrain($(this).val(), 1);
@@ -27,6 +22,7 @@ for (var i = 0; i < 4; i++) {
 	});
 }
 
+var damageResults;
 function performCalculations() {
 	var p1info = $("#p1");
 	var p2info = $("#p2");
@@ -108,62 +104,22 @@ $(".result-move").change(function () {
 			var desc = result.fullDesc(notation, false);
 			if (desc.indexOf('--') === -1) desc += ' -- possibly the worst move ever';
 			$("#mainResult").text(desc);
-			var summary = displayDamageHits(result.damage);
-			var rest = "";
-			var newLine = summary.indexOf('\n');
-			if (newLine > -1) {
-				rest = summary.substring(newLine + 1);
-				summary = summary.substring(0, newLine);
-			}
-			$("#firstDmgValues").text("Possible damage amounts: (" + summary + ")");
-			if (rest !== "") $("#restDmgValues").text("(" + rest + ")");
-
-			if (rest.trim() === "") {
-				$("#firstDmgValues").css("display", "block");
-				$("#restDmgValues").text("");
-			} else {
-				$("#damageValues").removeAttr("open");
-				$("#firstDmgValues").css("display", "revert");
-			}
+			$("#damageValues").text("Possible damage amounts: (" + displayDamageHits(result.damage) + ")");
 		}
 	}
 });
 
 function displayDamageHits(damage) {
 	// Fixed Damage
-	if (typeof damage === 'number') return damage.toString();
+	if (typeof damage === 'number') return damage;
 	// Standard Damage
-	if (damage.length > 2 && typeof damage[0] === 'number')
-		return damage.join(', ');
+	if (damage.length > 2) return damage[7];
 	// Fixed Parental Bond Damage
 	if (typeof damage[0] === 'number' && typeof damage[1] === 'number') {
 		return '1st Hit: ' + damage[0] + '; 2nd Hit: ' + damage[1];
 	}
-	// Multihit Damage
-	var fullText = "";
-	for (var i = 1; i <= damage.length; i++) {
-		var txt = toOrdinal(i) + " Hit: " + damage[i - 1].join(', ');
-		if (i > 1 && i < damage.length) txt += "; ";
-		fullText += txt;
-		if (i % 2 == 1 && i < damage.length) fullText += "\n";
-	}
-	return fullText;
-}
-
-function toOrdinal(num) {
-	if (typeof num !== "number" || !Number.isInteger(num)) {
-		return "Input must be an integer.";
-	}
-	switch (num) {
-	case 1:
-		return num + "st";
-	case 2:
-		return num + "nd";
-	case 3:
-		return num + "rd";
-	default:
-		return num + "th";
-	}
+	// Parental Bond Damage
+	return '1st Hit: ' + damage[0][7] + '; 2nd Hit: ' + damage[1][7];
 }
 
 function findDamageResult(resultMoveObj) {
@@ -207,13 +163,11 @@ $(".mode").change(function () {
 	params.set('mode', $(this).attr("id"));
 	var mode = params.get('mode');
 	if (mode === 'randoms') {
-		window.location.replace('randoms.html?' + params);
+		window.location.replace('randoms' + linkExtension + '?' + params);
 	} else if (mode === 'one-vs-one') {
-		window.location.replace('index.html?' + params);
-	} else if (mode === "oms") {
-		window.location.replace('oms.html');
+		window.location.replace('index' + linkExtension + '?' + params);
 	} else {
-		window.location.replace('honkalculate.html?' + params);
+		window.location.replace('honkalculate' + linkExtension + '?' + params);
 	}
 });
 
@@ -226,31 +180,22 @@ $(document).ready(function () {
 	var m = params.get('mode');
 	if (m) {
 		if (m !== 'one-vs-one' && m !== 'randoms') {
-			window.location.replace('honkalculate.html?' + params);
+			window.location.replace('honkalculate' + linkExtension + '?' + params);
 		} else {
 			if ($('#randoms').prop('checked')) {
 				if (m === 'one-vs-one') {
-					window.location.replace('index.html?' + params);
+					window.location.replace('index' + linkExtension + '?' + params);
 				}
 			} else {
 				if (m === 'randoms') {
-					window.location.replace('randoms.html?' + params);
+					window.location.replace('randoms' + linkExtension + '?' + params);
 				}
 			}
 		}
 	}
-
-	var importParam = params.get('import');
-	if (importParam) {
-		try {
-			var decodedImport = atob(importParam); // Decode base64
-			$('.import-team-text').val(decodedImport); // Set value to text area
-		} catch (e) {
-			console.error('Failed to decode Import parameter:', e);
-		}
-	}
-
-	$(".calc-trigger").bind("change keyup", PC_HANDLER);
+	$(".calc-trigger").bind("change keyup", function () {
+		setTimeout(performCalculations, 0);
+	});
 	performCalculations();
 });
 
