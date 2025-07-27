@@ -301,7 +301,6 @@ function addSets(pokes, name) {
 				currentPoke.teraType = getTeraType(rows[i + 1].split(":"));
 				currentPoke = getStats(currentPoke, rows, i + 1);
 				currentPoke = getMoves(currentPoke, rows, i);
-				addToDex(currentPoke);
 				addedpokes++;
 			}
 		}
