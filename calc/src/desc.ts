@@ -71,7 +71,7 @@ export function display(
   
   const minDisplay = toDisplay(notation, min, defender.maxHP());
   const maxDisplay = toDisplay(notation, max, defender.maxHP());
-
+ 
   const desc = buildDescription(rawDesc, attacker, defender);
   const damageText = `${middle} (${middleDisplay}${notation})`;
 
@@ -99,7 +99,7 @@ export function displayMove(
   const recoveryText = getRecovery(gen, attacker, defender, move, damage, notation).text;
   const recoilText = getRecoil(gen, attacker, defender, move, damage, notation).text;
 
-  return `${middle}${notation}${recoveryText &&
+  return `${middleDisplay}${notation}${recoveryText &&
     ` (${recoveryText})`}${recoilText && ` (${recoilText})`}`;
 }
 
