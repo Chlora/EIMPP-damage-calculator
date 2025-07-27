@@ -600,10 +600,10 @@ function smogonAnalysis(pokemonName) {
 
 // auto-update set details on select
 $(".set-selector").change(function () {
-	var fullSetName = $(this).val();
+	var fullSetName = '';
 	var pokemonName = fullSetName.substring(0, fullSetName.indexOf(" ("));
-	var setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
-	var pokemon = pokedex[pokemonName];
+	var setName = '';
+	var pokemon = null;
 	if (pokemon) {
 		var pokeObj = $(this).closest(".poke-info");
 		var isAutoTera =
