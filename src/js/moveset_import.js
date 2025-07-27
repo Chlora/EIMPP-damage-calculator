@@ -177,19 +177,6 @@ function getItem(currentRow, j) {
 function getMoves(currentPoke, rows, offset) {
 	var movesFound = false;
 	var moves = [];
-	for (var x = offset; x < offset + 12; x++) {
-		if (rows[x]) {
-			if (rows[x][0] == "-") {
-				movesFound = true;
-				var move = rows[x].substr(2, rows[x].length - 2).replace("[", "").replace("]", "").replace("  ", "");
-				moves.push(move);
-			} else {
-				if (movesFound == true) {
-					break;
-				}
-			}
-		}
-	}
 	currentPoke.moves = moves;
 	return currentPoke;
 }

@@ -642,7 +642,7 @@ $(".set-selector").change(function () {
 				randset = randdex[pokemonName];
 			}
 		}
-		var regSets = pokemonName in setdex && setName in setdex[pokemonName];
+		var regSets = null;
 
 		if (randset) {
 			var listItems = randset.items ? randset.items : [];
