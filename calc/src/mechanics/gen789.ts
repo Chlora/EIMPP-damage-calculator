@@ -902,6 +902,7 @@ export function calculateBasePowerSMSSSV(
     desc.attackerItem = attacker.item;
     break;
   case 'Dragon Energy':
+  case 'Cryonic Burst':
   case 'Eruption':
   case 'Water Spout':
     basePower = Math.max(1, Math.floor((150 * attacker.curHP()) / attacker.maxHP()));
