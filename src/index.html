@@ -172,10 +172,10 @@
                     <select class="gender calc-trigger"><option></option><option selected="selected">Male</option><option>Female</option></select>
                 </div>
                 <div>
-                    <label for="levelL1">Level</label>
-                    <!--We use inputmode="decimal" so that mobile devices will have a numpad appear when inputting values.
-                    https://css-tricks.com/everything-you-ever-wanted-to-know-about-inputmode/#aa-decimal-->
-                    <input class="level calc-trigger" id="levelL1" value="100" inputmode="decimal" />
+                    <!--<label for="levelL1">Level</label>
+                    We use inputmode="decimal" so that mobile devices will have a numpad appear when inputting values.
+                    https://css-tricks.com/everything-you-ever-wanted-to-know-about-inputmode/#aa-decimal
+                    <input class="level calc-trigger" id="levelL1" value="100" inputmode="decimal" />-->
                 </div>
                 <div class="hide">
                     <label for="weightL1">Weight (kg)</label>
@@ -699,7 +699,7 @@
                     <!--<input class="visually-hidden calc-trigger" type="radio" name="format" value="Doubles" id="doubles-format" />
                     <label class="btn btn-right" for="doubles-format">Doubles</label>-->
                 </div>
-                <div aria-labelledby="selectDefaultLevelInstruction" role="radiogroup" style="margin: auto auto 5px;" title="Select the default level.">
+                <!--<div aria-labelledby="selectDefaultLevelInstruction" role="radiogroup" style="margin: auto auto 5px;" title="Select the default level.">
                     <span class="visually-hidden" id="selectDefaultLevelInstruction">Select the default level.</span>
                     <input class="visually-hidden calc-trigger" type="radio" name="defaultLevel" value="100" id="default-level-100" />
                     <label class="btn btn-wide btn-left" for="default-level-100">Level 100</label>
@@ -714,8 +714,8 @@
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Grassy" id="grassy" /><label class="btn btn-mid" for="grassy">Grassy</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Misty" id="misty" /><label class="btn btn-mid" for="misty">Misty</label>
                     <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Psychic" id="psychic" /><label class="btn btn-xxxwide btn-right" for="psychic">Psychic Terrain</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Crawly" id="crawly" /><label class="btn btn-xxxwide btn-left" for="skitter">Skitter Field</label>
-                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Spooky" id="spooky" /><label class="btn btn-xxxwide btn-right" for="fog">Fog</label>
+                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Crawly" id="crawly" /><label class="btn btn-xxxwide btn-left" for="crawly">Skitter Field</label>
+                    <input class="visually-hidden terrain-trigger calc-trigger" type="checkbox" name="terrain" value="Spooky" id="spooky" /><label class="btn btn-xxxwide btn-right" for="spooky">Fog</label>
                 </div>
                 <div aria-labelledby="selectRuinInstruction" class="gen-specific g9 format-specific doubles" role="group" style="margin: 5px auto auto;" title="Select the ruin abilities from other Pok&eacute;mon on the field.">
                     <span class="visually-hidden" id="selectRuinInstruction">Select the active Ruin abilities from other Poke&eacute;mon on the field.</span>
@@ -747,8 +747,8 @@
                         <span class="gen-specific g9">
                             <input class="weather visually-hidden calc-trigger" type="radio" name="weather" value="Snow" id="snow" />
                             <label class="btn btn-small btn-right" for="snow">Snow</label>
-                            <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Rain" id="acidrain" />
-                            <label class="btn btn-wide " for="acidrain">Acid Rain</label>
+                            <input class="visually-hidden calc-trigger" type="radio" name="weather" value="Acid Rain" id="acid-rain" />
+                            <label class="btn btn-wide " for="acid-rain">Acid Rain</label>
                         </span>
                     </div>
                     <div class="gen-specific g6 g7 g8 g9" title="Select the current weather condition.">
