@@ -1565,7 +1565,6 @@ function getSetOptions(sets) {
 			if (pokeName in setdex) {
 				var setNames = Object.keys(setdex[pokeName]);
 				for (var j = 0; j < setNames.length; j++) {
-				  break;
 					var setName = setNames[j];
 					setOptions.push({
 						pokemon: pokeName,
