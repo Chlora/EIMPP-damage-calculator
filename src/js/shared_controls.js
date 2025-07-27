@@ -1558,8 +1558,14 @@ function getSetOptions(sets) {
 		} else {
 			if (pokeName in setdex) {
 				var setNames = Object.keys(setdex[pokeName]);
-				for (var j = 0; j < setNames.length; j++) {
+				for (var j = 0; j < 2; j++) {
 					var setName = setNames[j];
+					setOptions.push({
+				pokemon: pokeName,
+				set: "Blank Set",
+				text: pokeName + " (Blank Set)",
+				id: pokeName + " (Blank Set)"
+			});
 				}
 			}
 			setOptions.push({
