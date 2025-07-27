@@ -1335,7 +1335,7 @@ export function calculateAttackSMSSSV(
       ? getStatDescriptionText(gen, defender, attackStat, defender.nature)
       : getStatDescriptionText(gen, attacker, attackStat, attacker.nature);
   const attackSource = move.named('Foul Play') ? defender : attacker;
-  if (attackSource.boosts[attackStat] === 0 {
+  if (attackSource.boosts[attackStat] === 0) {
     attack = attackSource.rawStats[attackStat];
   } else if (defender.hasAbility('Unaware')) {
     attack = attackSource.rawStats[attackStat];
