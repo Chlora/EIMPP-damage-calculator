@@ -83,10 +83,15 @@ export class Result {
 export function middleValue(damage : Damage) : number {
   if (typeof damage === 'number') 
    return damage;
-  if (typeof damage === number[])
-   return damage[9];
+  if (Array.isArray(damage)){
+    if(Array.isArray(damage[0])){
+      return damage[0][9] * damage.length;
+    }
+    return damage[9];
+  }
   
-  return damage[0][9] * damage.length;
+  
+  return 0;
 }
 
 export function damageRange(damage: Damage): [number, number] {
