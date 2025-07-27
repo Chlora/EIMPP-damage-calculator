@@ -95,7 +95,7 @@ function performCalculations() {
 				var highestDamage = -1;
 				var data = [setOptions[i].id];
 				for (var n = 0; n < 4; n++) {
-				  alert(damageResults[n])
+				  alert(damageResults[n]);
 					result = damageResults[n];
 					minMaxDamage = result.range();
 					minDamage = minMaxDamage[0];
