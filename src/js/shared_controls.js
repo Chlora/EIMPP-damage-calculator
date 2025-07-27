@@ -1562,7 +1562,21 @@ function getSetOptions(sets) {
 				}
 			}
 		} else {
-			
+			if (pokeName in setdex) {
+				var setNames = Object.keys(setdex[pokeName]);
+				for (var j = 0; j < setNames.length; j++) {
+				  break;
+					var setName = setNames[j];
+					setOptions.push({
+						pokemon: pokeName,
+						set: setName,
+						text: pokeName + " (" + setName + ")",
+						id: pokeName + " (" + setName + ")",
+						isCustom: setdex[pokeName][setName].isCustomSet,
+						nickname: setdex[pokeName][setName].nickname || ""
+					});
+				}
+			}
 			setOptions.push({
 				pokemon: pokeName,
 				set: "Blank Set",
