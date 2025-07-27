@@ -1330,7 +1330,7 @@ var SETDEX = [
 	typeof SETDEX_XY === 'undefined' ? {} : SETDEX_XY,
 	typeof SETDEX_SM === 'undefined' ? {} : SETDEX_SM,
 	typeof SETDEX_SS === 'undefined' ? {} : SETDEX_SS,
-	typeof SETDEX_SV === 'undefined'
+	typeof SETDEX_SV === 'undefined' ? {} : SETDEX_SV,
 ];
 
 /*
@@ -1562,20 +1562,7 @@ function getSetOptions(sets) {
 				}
 			}
 		} else {
-			if (pokeName in setdex) {
-				var setNames = Object.keys(setdex[pokeName]);
-				for (var j = 0; j < setNames.length; j++) {
-					var setName = setNames[j];
-					setOptions.push({
-						pokemon: pokeName,
-						set: setName,
-						text: pokeName + " (" + setName + ")",
-						id: pokeName + " (" + setName + ")",
-						isCustom: setdex[pokeName][setName].isCustomSet,
-						nickname: setdex[pokeName][setName].nickname || ""
-					});
-				}
-			}
+			
 			setOptions.push({
 				pokemon: pokeName,
 				set: "Blank Set",
