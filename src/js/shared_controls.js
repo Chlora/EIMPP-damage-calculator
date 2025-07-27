@@ -600,10 +600,10 @@ function smogonAnalysis(pokemonName) {
 
 // auto-update set details on select
 $(".set-selector").change(function () {
-	var fullSetName = '';
+	var fullSetName = $(this).val();
 	var pokemonName = fullSetName.substring(0, fullSetName.indexOf(" ("));
-	var setName = '';
-	var pokemon = null;
+	var setName = fullSetName.substring(fullSetName.indexOf("(") + 1, fullSetName.lastIndexOf(")"));
+	var pokemon = pokedex[pokemonName];
 	if (pokemon) {
 		var pokeObj = $(this).closest(".poke-info");
 		var isAutoTera =
@@ -642,7 +642,7 @@ $(".set-selector").change(function () {
 				randset = randdex[pokemonName];
 			}
 		}
-		var regSets = null;
+		var regSets = pokemonName in setdex && setName in setdex[pokemonName];
 
 		if (randset) {
 			var listItems = randset.items ? randset.items : [];
