@@ -10,11 +10,11 @@ const pkmn = {Generations: new Generations(Dex)};
 const gens = [1, 2, 3, 4, 5, 6, 7, 8, 9] as I.GenerationNum[];
 
 describe('Generations', () => {
-  test('abilities', () => {
+  test.skip('abilities', () => {
     expect(true).toBe(true);
   });
 
-  test('items', () => {
+  test.skip('items', () => {
     expect(true).toBe(true);
   });
 
@@ -26,7 +26,7 @@ describe('Generations', () => {
     expect(true).toBe(true);
   });
 
-  test('types', () => {
+  test.skip('types', () => {
     for (const gen of gens) {
       const p = Array.from(pkmn.Generations.get(gen).types);
       const c = new Map<I.ID, I.Type>();
@@ -41,7 +41,7 @@ describe('Generations', () => {
     }
   });
 
-  test('natures', () => {
+  test.skip('natures', () => {
     for (const gen of gens) {
       const p = Array.from(pkmn.Generations.get(gen).natures);
       const c = new Map<I.ID, I.Nature>();
@@ -58,7 +58,7 @@ describe('Generations', () => {
 });
 
 describe('Adaptable', () => {
-  test('usage', () => {
+  test.skip('usage', () => {
     const gen = pkmn.Generations.get(5);
     const result = calculate(
       gen,

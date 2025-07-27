@@ -1379,7 +1379,11 @@ export function calculateAtModsSMSSSV(
     atMods.push(6144);
     desc.attackerAbility = attacker.ability;
     desc.weather = field.weather;
-  } else if (
+  } else if(field.attackerSide.isTailwind && move.named('Barometric Crush')) 
+    {
+      move.isCrit = true
+    }
+   else if (
     // Gorilla Tactics has no effect during Dynamax (Anubis)
     (attacker.hasAbility('Gorilla Tactics') && move.category === 'Physical' &&
      !attacker.isDynamaxed)) {
