@@ -369,7 +369,7 @@ $(allPokemon("#clearSets")).click(function () {
 		localStorage.removeItem("customsets");
 		alert("Custom Sets successfully cleared. Please refresh the page.");
 		$(allPokemon("#importedSetsOptions")).hide();
-		loadDefaultLists();
+		//loadDefaultLists();
 	}
 });
 
@@ -379,7 +379,7 @@ $(allPokemon("#importedSets")).click(function () {
 	if (showCustomSets) {
 		loadCustomList(pokeID);
 	} else {
-		loadDefaultLists();
+		//loadDefaultLists();
 	}
 });
 
@@ -391,6 +391,6 @@ $(document).ready(function () {
 		updateDex(customSets);
 		$(allPokemon("#importedSetsOptions")).css("display", "inline");
 	} else {
-		loadDefaultLists();
+		//loadDefaultLists();
 	}
 });
