@@ -475,13 +475,13 @@ const SV = SS.concat([
   'Auspicious Armor',
   'Ability Shield',
   'Booster Energy',
-  'Chaos Berry', //eimpp custom
+  'Chaos Berry', // eimpp custom
   'Clear Amulet',
   'Cornerstone Mask',
-  'Corroded Rock', //eimpp custom
+  'Corroded Rock', // eimpp custom
   'Covert Cloak',
   'Fairy Feather',
-  'Happiest Mask', //eimpp custom
+  'Happiest Mask', // eimpp custom
   'Hearthflame Mask',
   'Loaded Dice',
   'Malicious Armor',
@@ -491,7 +491,7 @@ const SV = SS.concat([
   'Punching Glove',
   'Lustrous Globe',
   'Griseous Core',
-  'Sticky Trap', //eimpp custom
+  'Sticky Trap', // eimpp custom
   'Strange Ball',
   'Syrupy Apple',
   'Unremarkable Teacup',
