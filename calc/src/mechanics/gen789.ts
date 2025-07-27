@@ -1386,7 +1386,6 @@ export function calculateAtModsSMSSSV(
   } else if(field.attackerSide.isTailwind && move.named('Barometric Crush')) 
     {
       move.isCrit = true;
-      desc.isCrit = true;
     }
    else if (
     // Gorilla Tactics has no effect during Dynamax (Anubis)
