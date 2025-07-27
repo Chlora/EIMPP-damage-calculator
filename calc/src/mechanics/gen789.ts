@@ -501,6 +501,10 @@ export function calculateSMSSSV(
     desc.defenderAbility = defender.ability;
     return result;
   }
+  
+  if (typeEffectiveness === 4 && !(defender.item && defender.item !== ''){
+    typeEffectiveness = 2;
+  }
 
   if (move.hasType('Ground') && !move.named('Thousand Arrows') &&
       !field.isGravity && defender.hasItem('Air Balloon')) {
@@ -1335,7 +1339,8 @@ export function calculateAttackSMSSSV(
       ? getStatDescriptionText(gen, defender, attackStat, defender.nature)
       : getStatDescriptionText(gen, attacker, attackStat, attacker.nature);
   const attackSource = move.named('Foul Play') ? defender : attacker;
-  if (attackSource.boosts[attackStat] === 0) {
+  if (attackSource.boosts[attackStat] === 0 ||
+      (isCritical && attackSource.boosts[attackStat] < 0)) {
     attack = attackSource.rawStats[attackStat];
   } else if (defender.hasAbility('Unaware')) {
     attack = attackSource.rawStats[attackStat];
@@ -1385,7 +1390,7 @@ export function calculateAtModsSMSSSV(
     desc.weather = field.weather;
   } else if(field.attackerSide.isTailwind && move.named('Barometric Crush')) 
     {
-      move.isCrit = true;
+      move.isCrit = true
     }
    else if (
     // Gorilla Tactics has no effect during Dynamax (Anubis)
@@ -1530,7 +1535,8 @@ export function calculateDefenseSMSSSV(
   const defenseStat = hitsPhysical ? 'def' : 'spd';
   const boosts = defender.boosts[field.isWonderRoom ? hitsPhysical ? 'spd' : 'def' : defenseStat];
   desc.defenseEVs = getStatDescriptionText(gen, defender, defenseStat, defender.nature);
-  if ((boosts === 0) ||
+  if (boosts === 0 ||
+      (isCritical && boosts > 0) ||
       move.ignoreDefensive) {
     defense = defender.rawStats[defenseStat];
   } else if (attacker.hasAbility('Unaware')) {
