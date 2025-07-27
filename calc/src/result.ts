@@ -81,11 +81,6 @@ export class Result {
   }
 }
 
-export function 8thValue(damage : Damage
- ): number {
-   
- }
-
 export function damageRange(damage: Damage): [number, number] {
   const range = multiDamageRange(damage);
   if (typeof range[0] === 'number') return range as [number, number];
@@ -107,7 +102,7 @@ export function multiDamageRange(
   if (typeof damage[0] !== 'number') {
     damage = damage as number[][];
     const ranges: [number, number]
-    ranges = [damage[0] * damage.length, damage[0] * damage.length]
+    ranges = [damage[0] * damage.length, damage[0] * damage.length];
     return ranges;
   }
   const d = damage as number[];
