@@ -1330,7 +1330,7 @@ var SETDEX = [
 	typeof SETDEX_XY === 'undefined' ? {} : SETDEX_XY,
 	typeof SETDEX_SM === 'undefined' ? {} : SETDEX_SM,
 	typeof SETDEX_SS === 'undefined' ? {} : SETDEX_SS,
-	typeof SETDEX_SV === 'undefined' ? {} : SETDEX_SV,
+	typeof SETDEX_SV === 'undefined'
 ];
 
 /*
