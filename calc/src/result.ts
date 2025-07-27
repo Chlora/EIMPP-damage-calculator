@@ -81,6 +81,11 @@ export class Result {
   }
 }
 
+export function 8thValue(damage : Damage
+ ): number {
+   
+ }
+
 export function damageRange(damage: Damage): [number, number] {
   const range = multiDamageRange(damage);
   if (typeof range[0] === 'number') return range as [number, number];
@@ -95,17 +100,14 @@ export function damageRange(damage: Damage): [number, number] {
 
 export function multiDamageRange(
   damage: Damage
-): [number, number] | [number[], number[]] {
+): [number, number] | [number[], number[]] | number {
   // Fixed Damage
   if (typeof damage === 'number') return [damage, damage];
   // Multihit Damage
   if (typeof damage[0] !== 'number') {
     damage = damage as number[][];
-    const ranges: [number[], number[]] = [[], []];
-    for (const damageList of damage) {
-      ranges[0].push(damageList[0]);
-      ranges[1].push(damageList[damageList.length - 1]);
-    }
+    const ranges: [number, number]
+    ranges = [damage[0] * damage.length, damage[0] * damage.length]
     return ranges;
   }
   const d = damage as number[];
@@ -114,5 +116,5 @@ export function multiDamageRange(
     return [d, d];
   }
   // Standard Damage
-  return [d[0], d[d.length - 1]];
+  return [d[9], d[9]];
 }
