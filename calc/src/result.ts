@@ -85,8 +85,11 @@ export function middleValue(damage : Damage) : number {
    return damage;
   if (Array.isArray(damage)){
     if(Array.isArray(damage[0])){
-      return damage[0][9] * damage.length;
+      const arr = damage as number[][];
+      return arr[0][9] * arr.length;
     }
+    
+    const arr = damage as number[];
     return damage[9];
   }
   
