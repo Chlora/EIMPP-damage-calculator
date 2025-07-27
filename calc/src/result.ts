@@ -81,9 +81,9 @@ export class Result {
   }
 }
 
-export function damageRange(damage: Damage): [number] | [number, number] {
+export function damageRange(damage: Damage): [number, number] {
   const range = multiDamageRange(damage);
-  if (typeof range[0] === 'number') return range as [number];
+  if (typeof range[0] === 'number') return range as [number, number];
   const d = range as [number[], number[]];
   const summedRange: [number, number] = [0, 0];
   for (let i = 0; i < d[0].length; i++) {
@@ -95,7 +95,7 @@ export function damageRange(damage: Damage): [number] | [number, number] {
 
 export function multiDamageRange(
   damage: Damage
-): [number] | [number[], number[]] {
+): [number, number] | [number[], number[]] {
   // Fixed Damage
   if (typeof damage === 'number') return [damage, damage];
   // Multihit Damage
@@ -111,8 +111,8 @@ export function multiDamageRange(
   const d = damage as number[];
   // Fixed Multihit
   if (d.length < 16) {
-    return [d, d];
+    return [d[9], d[9]];
   }
   // Standard Damage
-  return [d[9]];
+  return [d[9], d[9]];
 }
