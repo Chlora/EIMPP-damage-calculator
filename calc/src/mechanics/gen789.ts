@@ -1093,6 +1093,8 @@ export function calculateBPModsSMSSSV(
     move.target = 'allAdjacentFoes';
     bpMods.push(6144);
     desc.moveBP = basePower * 1.5;
+  } else if(move.priority > 0 && isGrounded(attacker, field) && field.hasTerrain('Crawly')){ //eimpp custom. this code makes priority moves deal 50% more damage. in theory, these moves should hit twice, with the second hit dealing 50% damage. but idk how to code that -lamp
+    bpMods.push(6144);
   } else if ((move.named('Knock Off') && !resistedKnockOffDamage) ||
     (move.named('Misty Explosion') && isGrounded(attacker, field) && field.hasTerrain('Misty')) ||
     (move.named('Grav Apple') && field.isGravity)

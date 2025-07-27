@@ -7876,7 +7876,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     nfe: true,
   },
     'Clobbopus+Regirock+Crabominable': {
-    types: ['Fight'],
+    types: ['Fighting'],
     bs: {hp: 80, at: 100, df: 200, sa: 50, sd: 100, sp: 50},
     weightkg: 4,
     abilities: {0: 'Clear Body'},
@@ -9537,11 +9537,11 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Protosynthesis'},
   },
   'Great Tusk+Flapple+Greedent': {
-    types: ['Ground', 'Fight'],
+    types: ['Ground', 'Fighting'],
     bs: {hp: 70, at: 110, df: 80, sa: 95, sd: 60, sp: 70},
     weightkg: 320,
     abilities: {0: 'Ripen'},
-}
+ },
 
   Greavard: {
     types: ['Ghost'],
@@ -9777,7 +9777,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 91, at: 90, df: 106, sa: 130, sd: 106, sp: 77},
     abilities: {0: 'Flash Fire'},
     weightkg: 39.8,
-}
+ },
   'Ogerpon-Cornerstone': {
     types: ['Grass', 'Rock'],
     bs: {hp: 80, at: 120, df: 84, sa: 60, sd: 96, sp: 110},
