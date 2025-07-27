@@ -4921,6 +4921,57 @@ const SV_PATCH: {[name: string]: DeepPartial<MoveData>} = {
     isWind: true,
     target: 'allAdjacentFoes',
   },
+    'Barometric Crush':{ //eimpp custom
+    bp: 75,
+    type: 'Flying',
+    category: 'Physical',
+    zp: 100,
+    maxPower : 100,
+    secondaries: true,
+    isWind: true,
+  },
+  //'Meteor Shower':{ //eimpp custom, currently not implemented
+    //bp: 20,
+    //type: 'Rock',
+    //category: 'Special',
+    //zp: 120,
+    //maxPower: 120,
+   // multihit: [2, 5],
+ // },
+  'Cryonic Burst':{ //eiimpp custom
+    bp: 150,
+    type: 'Ice',
+    category: 'Special',
+    maxPower: 150,
+    zp: 150,
+    target: 'allAdjacentFoes',
+  },
+    'Acid Rain': { //eimpp custom
+    bp: 0, 
+    category: 'Status', 
+    type: 'Poison',
+  },
+  'Elytron Blow':{ //eimpp custom. fun fact: it used to be a wind move, not sure why
+    bp: 60,
+    type: 'Bug',
+    category: 'Physical', 
+    priority: 1,
+  },
+  'Nutsack Assault': { //eimpp custom lole
+    bp: 100,
+    type: 'Dark',
+    category: 'Physical',
+    zp: 180,
+    maxPower: 130,
+    makesContact: true,
+    target: 'allAdjacentFoes',
+  },
+  'Spike Shot': { //eimpp custom
+    bp: 80,
+    type: 'Grass',
+    category: 'Physical',
+    drain: [1, 2],
+  },
 };
 
 const SV: {[name: string]: MoveData} = extend(true, {}, SS, SV_PATCH);
