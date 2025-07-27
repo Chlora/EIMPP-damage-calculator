@@ -1179,6 +1179,11 @@ export function calculateBPModsSMSSSV(
     bpMods.push(6144);
     desc.attackerAbility = attacker.ability;
   }
+    if ((attacker.hasAbility('Trigger Fingers') && (move.hits > 1))) { //eimpp custom. Trigger Fingers boosts multihit moves by 20%.
+
+      bpMods.push(4915);
+
+  }
 
   const aura = `${move.type} Aura`;
   const isAttackerAura = attacker.hasAbility(aura);
@@ -1320,7 +1325,7 @@ export function calculateAttackSMSSSV(
     move.named('Shell Side Arm') &&
     getShellSideArmCategory(attacker, defender) === 'Physical'
       ? 'atk'
-      : move.named('Body Press')
+      : move.named('Body Press') || move.named('Elytron Blow')
         ? 'def'
         : move.category === 'Special'
           ? 'spa'
