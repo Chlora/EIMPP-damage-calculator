@@ -1531,7 +1531,7 @@ export function calculateDefenseSMSSSV(
   const boosts = defender.boosts[field.isWonderRoom ? hitsPhysical ? 'spd' : 'def' : defenseStat];
   desc.defenseEVs = getStatDescriptionText(gen, defender, defenseStat, defender.nature);
   if ((boosts === 0) ||
-      move.ignoreDefensive)) {
+      move.ignoreDefensive) {
     defense = defender.rawStats[defenseStat];
   } else if (attacker.hasAbility('Unaware')) {
     defense = defender.rawStats[defenseStat];
