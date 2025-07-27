@@ -502,7 +502,7 @@ export function calculateSMSSSV(
     return result;
   }
   
-  if (typeEffectiveness === 4 && !(defender.item && defender.item !== ''){
+  if ((typeEffectiveness === 4) && !(defender.item && defender.item !== '')){
     typeEffectiveness = 2;
   }
 
