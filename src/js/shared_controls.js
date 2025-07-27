@@ -1716,7 +1716,6 @@ function getTerrainEffects() {
 }
 
 function loadDefaultLists() {
-	return;
 	$(".set-selector").select2({
 		formatResult: function (object) {
 			if ($("#randoms").prop("checked")) {
