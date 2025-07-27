@@ -2,7 +2,7 @@ import type {Generation, Weather, Terrain, TypeName, ID} from './data/interface'
 import type {Field, Side} from './field';
 import type {Move} from './move';
 import type {Pokemon} from './pokemon';
-import {type Damage, damageRange, multiDamageRange} from './result';
+import {type Damage, damageRange, multiDamageRange, middleValue} from './result';
 import {error} from './util';
 // NOTE: This needs to come last to simplify bundling
 import {isGrounded} from './mechanics/util';
@@ -66,11 +66,14 @@ export function display(
 ) {
   const [min, max] = damageRange(damage);
 
+  const middle = middleValue(damage);
+  const middleDisplay = toDisplay(notation, middle, defender.maxHP());
+  
   const minDisplay = toDisplay(notation, min, defender.maxHP());
   const maxDisplay = toDisplay(notation, max, defender.maxHP());
 
   const desc = buildDescription(rawDesc, attacker, defender);
-  const damageText = `${min}-${max} (${minDisplay} - ${maxDisplay}${notation})`;
+  const damageText = `${middle} (${middleDisplay}${notation})`;
 
   if (move.category === 'Status' && !move.named('Nature Power')) return `${desc}: ${damageText}`;
   const koChanceText = getKOChance(gen, attacker, defender, move, field, damage, err).text;

@@ -80,6 +80,14 @@ export class Result {
     );
   }
 }
+export function middleValue(damage : Damage) : number {
+  if (typeof damage === 'number') 
+   return damage;
+  if (typeof damage === number[])
+   return damage[9];
+  
+  return damage[0][9] * damage.length;
+}
 
 export function damageRange(damage: Damage): [number, number] {
   const range = multiDamageRange(damage);
