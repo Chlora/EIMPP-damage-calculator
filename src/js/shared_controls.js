@@ -1523,7 +1523,7 @@ function clearField() {
 }
 
 function getSetOptions(sets) {
-	var setsHolder = undefined;
+	var setsHolder = sets;
 	if (setsHolder === undefined) {
 		setsHolder = pokedex;
 	}
@@ -1545,12 +1545,6 @@ function getSetOptions(sets) {
 					var randTypes = Object.keys(randdex[pokeName]);
 					for (var j = 0; j < randTypes.length; j++) {
 						var rand = randTypes[j];
-						setOptions.push({
-							pokemon: pokeName + (rand === "Randoms" ? "" : " (" + rand.split(' ')[0] + ")"),
-							set: rand + ' Set',
-							text: pokeName + " (" + rand + ")",
-							id: pokeName + " (" + rand + ")"
-						});
 					}
 				} else {
 					setOptions.push({
@@ -1562,6 +1556,20 @@ function getSetOptions(sets) {
 				}
 			}
 		} else {
+			if (pokeName in setdex) {
+				var setNames = Object.keys(setdex[pokeName]);
+				for (var j = 0; j < setNames.length; j++) {
+					var setName = setNames[j];
+					setOptions.push({
+						pokemon: pokeName,
+						set: setName,
+						text: pokeName + " (" + setName + ")",
+						id: pokeName + " (" + setName + ")",
+						isCustom: setdex[pokeName][setName].isCustomSet,
+						nickname: setdex[pokeName][setName].nickname || ""
+					});
+				}
+			}
 			setOptions.push({
 				pokemon: pokeName,
 				set: "Blank Set",
