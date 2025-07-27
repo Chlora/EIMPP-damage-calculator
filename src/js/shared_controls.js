@@ -1523,7 +1523,7 @@ function clearField() {
 }
 
 function getSetOptions(sets) {
-	var setsHolder = sets;
+	var setsHolder = undefined;
 	if (setsHolder === undefined) {
 		setsHolder = pokedex;
 	}
