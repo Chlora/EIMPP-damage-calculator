@@ -81,9 +81,9 @@ export class Result {
   }
 }
 
-export function damageRange(damage: Damage): [number, number] {
+export function damageRange(damage: Damage): number | [number, number] {
   const range = multiDamageRange(damage);
-  if (typeof range[0] === 'number') return range as [number, number];
+  if (typeof range[0] === 'number') return range[9] as [number];
   const d = range as [number[], number[]];
   const summedRange: [number, number] = [0, 0];
   for (let i = 0; i < d[0].length; i++) {
@@ -114,5 +114,5 @@ export function multiDamageRange(
     return [d, d];
   }
   // Standard Damage
-  return [d[10], d[d.length - 1]];
+  return [d[0], d[d.length - 1]];
 }
