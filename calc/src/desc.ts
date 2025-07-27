@@ -89,6 +89,9 @@ export function displayMove(
   notation = '%'
 ) {
   const [min, max] = damageRange(damage);
+  
+  const middle = middleValue(damage);
+  const middleDisplay = toDisplay(notation, middle, defender.maxHP());
 
   const minDisplay = toDisplay(notation, min, defender.maxHP());
   const maxDisplay = toDisplay(notation, max, defender.maxHP());
@@ -96,7 +99,7 @@ export function displayMove(
   const recoveryText = getRecovery(gen, attacker, defender, move, damage, notation).text;
   const recoilText = getRecoil(gen, attacker, defender, move, damage, notation).text;
 
-  return `${minDisplay} - ${maxDisplay}${notation}${recoveryText &&
+  return `${middle}${notation}${recoveryText &&
     ` (${recoveryText})`}${recoilText && ` (${recoilText})`}`;
 }
 
@@ -111,12 +114,19 @@ export function getRecovery(
   const [minDamage, maxDamage] = damageRange(damage);
   let minD;
   let maxD;
+  
+  const middle = middleValue(damage);
+  let middleRecovery = 0;
+  
+  
   if (move.timesUsed && move.timesUsed > 1) {
     [minD, maxD] = multiDamageRange(damage) as [number[], number[]];
   } else {
     minD = [minDamage];
     maxD = [maxDamage];
   }
+  
+  
 
   const recovery = [0, 0] as [number, number];
   let text = '';
@@ -124,25 +134,31 @@ export function getRecovery(
   const ignoresShellBell =
     gen.num === 3 && move.named('Doom Desire', 'Future Sight');
   if (attacker.hasItem('Shell Bell') && !ignoresShellBell) {
+    middleRecovery += Math.max(Math.round(middleRecovery/8), 1);
     for (let i = 0; i < minD.length; i++) {
       recovery[0] += minD[i] > 0 ? Math.max(Math.round(minD[i] / 8), 1) : 0;
       recovery[1] += maxD[i] > 0 ? Math.max(Math.round(maxD[i] / 8), 1) : 0;
     }
+    
+  
     // This is incorrect if the opponent heals during your damage
     // Ex: Sitrus Berry procs in the middle of multi-hit move
     const maxHealing = Math.round(defender.curHP() / 8);
     recovery[0] = Math.min(recovery[0], maxHealing);
     recovery[1] = Math.min(recovery[1], maxHealing);
+    middleRecovery = Math.min(middleRecovery, maxHealing);
   }
 
   if (move.named('G-Max Finale')) {
     recovery[0] += Math.round(attacker.maxHP() / 6);
     recovery[1] += Math.round(attacker.maxHP() / 6);
+    middleRecovery += Math.round(attacker.maxHP() / 6);
   }
 
   if (move.named('Pain Split')) {
     const average = Math.floor((attacker.curHP() + defender.curHP()) / 2);
     recovery[0] = recovery[1] = average - attacker.curHP();
+    middleRecovery = recovery[0];
   }
 
   if (move.drain) {
@@ -152,6 +168,7 @@ export function getRecovery(
       [minD, maxD] = multiDamageRange(damage) as [number[], number[]];
     }
     const percentHealed = move.drain[0] / move.drain[1];
+    middleRecovery += Math.max(Math.round(middle * percentHealed), 1);
     const max = Math.round(defender.curHP() * percentHealed);
     for (let i = 0; i < minD.length; i++) {
       const range = [minD[i], maxD[i]];
@@ -163,12 +180,16 @@ export function getRecovery(
     }
   }
 
-  if (recovery[1] === 0) return {recovery, text};
+  if (middleRecovery === 0) return {recovery, text};
+  
+  
 
   const minHealthRecovered = toDisplay(notation, recovery[0], attacker.maxHP());
   const maxHealthRecovered = toDisplay(notation, recovery[1], attacker.maxHP());
-  const change = recovery[0] > 0 ? 'recovered' : 'lost';
-  text = `${minHealthRecovered} - ${maxHealthRecovered}${notation} ${change}`;
+  
+  const middleHealthRecovered = toDisplay(notation, middleRecovery, attacker.maxHP());
+  const change = middleRecovery > 0 ? 'recovered' : 'lost';
+  text = `${middleHealthRecovered} ${notation} ${change}`;
 
   return {recovery, text};
 }
