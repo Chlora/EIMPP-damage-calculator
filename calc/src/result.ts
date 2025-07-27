@@ -90,7 +90,7 @@ export function middleValue(damage : Damage) : number {
     }
     
     const arr = damage as number[];
-    return damage[9];
+    return arr[9];
   }
   
   
