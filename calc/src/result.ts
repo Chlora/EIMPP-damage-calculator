@@ -114,5 +114,5 @@ export function multiDamageRange(
     return [d, d];
   }
   // Standard Damage
-  return [d[0], d[d.length - 1]];
+  return [d[10], d[d.length - 1]];
 }
