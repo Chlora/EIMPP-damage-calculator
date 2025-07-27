@@ -111,8 +111,8 @@ export function multiDamageRange(
   const d = damage as number[];
   // Fixed Multihit
   if (d.length < 16) {
-    return [d[9], d[9]];
+    return [damage, damage];
   }
   // Standard Damage
-  return [d[9], d[9]];
+  return [damage, damage];
 }
