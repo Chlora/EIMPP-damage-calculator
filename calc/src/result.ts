@@ -81,7 +81,7 @@ export class Result {
   }
 }
 
-export function damageRange(damage: Damage): [number, number] {
+export function damageRange(damage: Damage): [number] | [number, number] {
   const range = multiDamageRange(damage);
   if (typeof range[0] === 'number') return range as [number];
   const d = range as [number[], number[]];
@@ -95,7 +95,7 @@ export function damageRange(damage: Damage): [number, number] {
 
 export function multiDamageRange(
   damage: Damage
-): [number, number] | [number[], number[]] {
+): [number] | [number[], number[]] {
   // Fixed Damage
   if (typeof damage === 'number') return [damage, damage];
   // Multihit Damage
