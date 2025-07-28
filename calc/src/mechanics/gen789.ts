@@ -501,10 +501,6 @@ export function calculateSMSSSV(
     desc.defenderAbility = defender.ability;
     return result;
   }
-  
-  if ((typeEffectiveness === 4) && !(defender.item && defender.item !== '')){
-    typeEffectiveness = 2;
-  }
 
   if (move.hasType('Ground') && !move.named('Thousand Arrows') &&
       !field.isGravity && defender.hasItem('Air Balloon')) {
@@ -1815,6 +1811,10 @@ export function calculateFinalModsSMSSSV(
     }
     desc.defenderItem = defender.item;
   }
+  
+  if ((typeEffectiveness === 4) && !(defender.item && defender.item !== '')){
+    finalMods.push(2048);
+  } //eipp clause
 
   return finalMods;
 }
