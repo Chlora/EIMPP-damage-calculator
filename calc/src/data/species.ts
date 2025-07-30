@@ -3856,7 +3856,7 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     'Wormadam-Trash+Snorlax+Perrserker': {
     types: ['Bug', 'Steel'],
     bs: {hp: 160, at: 110, df: 65, sp: 30, sl: 65},
-    weightkg: 460,
+    weightkg: 6.5,
   },
   Yanmega: {
     types: ['Bug', 'Flying'],
