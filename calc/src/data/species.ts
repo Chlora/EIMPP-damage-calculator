@@ -9156,7 +9156,7 @@ const PLA_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
 
 
   'Zorua-Hisui+Registeel+Runerigus': {
-    types: ['Steel'],
+    types: ['Normal', 'Ghost'],
     bs: {hp: 80, at: 75, df: 150, sa: 75, sd: 150, sp: 50},
     weightkg: 12.5,
     abilities: {0: 'Clear Body'},
